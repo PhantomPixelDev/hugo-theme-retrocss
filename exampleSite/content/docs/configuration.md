@@ -14,6 +14,14 @@ themes.
 `params.borderRadius` is the framework's single radius token. `0` keeps the
 Windows 95 squares.
 
+## Titles and credit
+
+`params.tagline` is appended to the site title in the home page's `<title>`, so
+a search result says what the site *is* rather than only what it is called.
+
+`params.themeCredit` controls the footer line. Left alone it credits the theme;
+set it to `false` and the footer credits the RetroCSS framework instead.
+
 ## The docs section
 
 Docs layouts are selected by page *type*, so the section's `_index.md` sets it

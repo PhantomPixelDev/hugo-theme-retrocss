@@ -11,7 +11,7 @@
 
 **[📺 Live demo](https://phantompixeldev.github.io/hugo-theme-retrocss/) • [🎨 RetroCSS](https://github.com/PhantomPixelDev/RetroCSS) • [📖 Theme docs](https://phantompixeldev.github.io/hugo-theme-retrocss/docs/)**
 
-![The demo site in light mode](images/screenshot.png)
+![The demo site in light mode](https://raw.githubusercontent.com/PhantomPixelDev/hugo-theme-retrocss/main/images/screenshot.png)
 
 </div>
 
@@ -36,8 +36,8 @@ Every shot below is the demo site in this repository, captured from the built ou
 
 | | |
 | --- | --- |
-| ![Home page in dark mode: sidebar with sections, archive and tag cloud, a featured post card, and a grid of post cards](images/home-dark.png) **Home, dark** | ![A blog post in light mode: breadcrumbs, hero image, byline, prose, and a code block with a Windows 95 title bar](images/post.png) **Post, light** |
-| ![A documentation page in dark mode: section tree, in-page contents, and the shortcode gallery showing alerts and cards](images/docs.png) **Docs, dark** | ![The search page in light mode showing three ranked results for the query "dark"](images/search.png) **Search, light** |
+| ![Home page in dark mode: sidebar with sections, archive and tag cloud, a featured post card, and a grid of post cards](https://raw.githubusercontent.com/PhantomPixelDev/hugo-theme-retrocss/main/images/home-dark.png) **Home, dark** | ![A blog post in light mode: breadcrumbs, hero image, byline, prose, and a code block with a Windows 95 title bar](https://raw.githubusercontent.com/PhantomPixelDev/hugo-theme-retrocss/main/images/post.png) **Post, light** |
+| ![A documentation page in dark mode: section tree, in-page contents, and the shortcode gallery showing alerts and cards](https://raw.githubusercontent.com/PhantomPixelDev/hugo-theme-retrocss/main/images/docs.png) **Docs, dark** | ![The search page in light mode showing three ranked results for the query "dark"](https://raw.githubusercontent.com/PhantomPixelDev/hugo-theme-retrocss/main/images/search.png) **Search, light** |
 
 ## Requirements
 
@@ -97,6 +97,7 @@ capitalizeListTitles = false
 
 [params]
   description = "Notes on building interfaces that look like 1995 and behave like today."
+  tagline = "a Windows 95/98 Hugo theme"   # appended to the home page's <title>
 
   # --- chrome ---
   accentHue = "primary"   # any RetroCSS hue: teal, violet, gold, navy, …
@@ -115,6 +116,7 @@ capitalizeListTitles = false
 
   # --- features ---
   search = true
+  themeCredit = true      # "Built with Hugo and RetroCSS for Hugo" in the footer
 
   # --- SEO ---
   images = ["images/og-card.png"]

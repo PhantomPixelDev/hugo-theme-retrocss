@@ -14,6 +14,13 @@
 # render hook forces it, because the palette has to come from CSS variables for
 # dark mode to reach it.
 
+[module]
+  [module.hugoVersion]
+    # `extended = false` is the point of this theme's build story: RetroCSS is
+    # vendored already compiled, so no Sass toolchain is needed.
+    extended = false
+    min = "0.158.0"
+
 [taxonomies]
   category = "categories"
   tag = "tags"

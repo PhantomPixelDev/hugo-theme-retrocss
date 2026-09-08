@@ -14,7 +14,8 @@
     </div>
       {{- else }}
     <a class="retro-nav-item" href="{{ .URL | relLangURL }}"
-       {{- with .Title }} data-retro-tooltip="{{ . }}"{{ end }}
+       {{- with .Params.tooltip }} data-retro-tooltip="{{ . }}"{{ end }}
+       {{- if strings.HasPrefix .URL "http" }} rel="noopener"{{ end }}
        {{- if or ($.IsMenuCurrent .Menu .) ($.HasMenuCurrent .Menu .) }} aria-current="page"{{ end }}>{{ .Name }}</a>
       {{- end }}
     {{- end }}

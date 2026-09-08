@@ -7,7 +7,11 @@
     {{ i18n "builtWith" | default "Built with" }}
     <a href="https://gohugo.io/">Hugo</a>
     {{ i18n "and" | default "and" }}
-    <a href="https://github.com/PhantomPixelDev/RetroCSS">RetroCSS{{ with $retro }} {{ .version }}{{ end }}</a>
+    {{- if site.Params.themeCredit | default true }}
+    <a href="https://github.com/PhantomPixelDev/hugo-theme-retrocss" rel="noopener">RetroCSS for Hugo</a>
+    {{- else }}
+    <a href="https://github.com/PhantomPixelDev/RetroCSS" rel="noopener">RetroCSS{{ with $retro }} {{ .version }}{{ end }}</a>
+    {{- end }}
     {{- with .OutputFormats.Get "rss" }} &middot; <a href="{{ .RelPermalink }}">RSS</a>{{ end -}}
   </p>
 </footer>

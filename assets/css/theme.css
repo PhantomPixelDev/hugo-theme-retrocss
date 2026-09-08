@@ -128,3 +128,11 @@
 .search-result { margin-bottom: var(--retro-spacing-md); }
 .search-result h2 { margin: 0 0 var(--retro-spacing-xs); font-size: var(--retro-font-size-lg); }
 .search-result mark { background: var(--retro-warning); color: var(--retro-warning-fg); }
+
+/* --- links on filled surfaces ------------------------------------------- */
+/* The default link colour is tuned as text on a *page* surface. Inside a
+   filled alert it is being read against the hue itself — 1.56:1 on the info
+   fill in dark mode. Riding the alert's own on-fill colour is legible by
+   construction, because the framework guarantees every fill/on-fill pair. */
+.retro-alert a { color: inherit; text-decoration: underline; }
+.retro-alert a:hover { text-decoration: none; }

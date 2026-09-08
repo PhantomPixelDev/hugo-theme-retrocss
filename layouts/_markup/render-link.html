@@ -1,4 +1,16 @@
 {{- $u := urls.Parse .Destination -}}
 {{- $external := and $u.IsAbs (ne $u.Host (urls.Parse site.BaseURL).Host) -}}
-<a href="{{ .Destination | safeURL }}"{{ with .Title }} title="{{ . }}"{{ end }}
+{{- $href := .Destination -}}
+{{- /* A root-relative link written by hand ("/docs/") ignores the baseURL's
+       path, so it 404s the moment the site is served from a subdirectory —
+       GitHub Pages being the obvious one. relURL does not fix this for an
+       already-absolute path, so the prefix is taken from the home page's own
+       RelPermalink, which is "/" on a site served from the root. */ -}}
+{{- if and (hasPrefix $href "/") (not (hasPrefix $href "//")) -}}
+  {{- $prefix := strings.TrimSuffix "/" site.Home.RelPermalink -}}
+  {{- if and $prefix (not (hasPrefix $href (printf "%s/" $prefix))) -}}
+    {{- $href = printf "%s%s" $prefix $href -}}
+  {{- end -}}
+{{- end -}}
+<a href="{{ $href | safeURL }}"{{ with .Title }} title="{{ . }}"{{ end }}
    {{- if $external }} rel="noopener noreferrer"{{ end }}>{{ .Text }}</a>

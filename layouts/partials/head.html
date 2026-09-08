@@ -1,6 +1,9 @@
 {{- $title := .Title | default site.Title -}}
 {{- $isHome := .IsHome -}}
-{{- $pageTitle := cond $isHome site.Title (printf "%s — %s" $title site.Title) -}}
+{{- /* A home page titled with nothing but the site name tells a search engine
+       nothing about what the site is; params.tagline is what fills that in. */ -}}
+{{- $pageTitle := printf "%s — %s" $title site.Title -}}
+{{- if $isHome }}{{ $pageTitle = site.Title }}{{ with site.Params.tagline }}{{ $pageTitle = printf "%s — %s" site.Title . }}{{ end }}{{ end -}}
 {{- $description := .Description | default (.Summary | plainify | truncate 160) | default site.Params.description | default site.Params.Description -}}
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">

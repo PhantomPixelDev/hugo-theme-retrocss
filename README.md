@@ -1,8 +1,8 @@
 <div align="center">
 
-# 🖥️ RetroCSS for Hugo
+# 🖥️ RetroCSS 9x
 
-**A Windows 95/98 Hugo theme for blogs and documentation** — authentic Win9x chrome, WCAG AA in light *and* dark, keyboard-operable components, RTL, client-side search, and no build step beyond Hugo itself.
+**A Win9x-style Hugo theme for blogs and documentation** — mid-90s desktop chrome, WCAG AA in light *and* dark, keyboard-operable components, RTL, client-side search, and no build step beyond Hugo itself.
 
 [![CI](https://github.com/PhantomPixelDev/hugo-theme-retrocss/actions/workflows/ci.yml/badge.svg)](https://github.com/PhantomPixelDev/hugo-theme-retrocss/actions/workflows/ci.yml)
 [![license](https://img.shields.io/github/license/PhantomPixelDev/hugo-theme-retrocss?style=flat-square&color=lightgrey)](LICENSE)
@@ -19,16 +19,16 @@
 
 ## Why this theme
 
-It is [RetroCSS](https://github.com/PhantomPixelDev/RetroCSS) — a Windows 95/98 UI framework with a real accessibility budget — wired into Hugo. The theme adds about eighty lines of layout CSS and nothing else: no second palette, no bespoke colours, no per-page overrides. Every surface you see is a framework component.
+It is [RetroCSS](https://github.com/PhantomPixelDev/RetroCSS) — a UI framework that reproduces the Windows 95/98 desktop look, with a real accessibility budget — wired into Hugo. The theme adds about eighty lines of layout CSS and nothing else: no second palette, no bespoke colours, no per-page overrides. Every surface you see is a framework component.
 
-- **Authentic Win9x chrome.** Raised and sunken bevels, square corners, a grey chassis, and a light source fixed at the top-left. Code blocks get a real title bar.
+- **Authentic 90s desktop chrome.** Raised and sunken bevels, square corners, a grey chassis, and a light source fixed at the top-left. Code blocks get a real title bar.
 - **Dark mode that follows the OS, with no flash.** The dark palette ships under `prefers-color-scheme` as well as `[data-theme]`, so a dark-OS visitor is painted dark on the first frame — even with the bundle blocked. CI fails the build on a theme flash.
 - **WCAG AA in both themes, enforced.** Every rendered text node on every page is measured against the surface actually painted behind it, at five widths, in both themes.
 - **Keyboard-operable.** Skip link, roving tabindex on tab strips and rating groups, tooltips on focus, named controls. Also a gate, not a claim.
 - **No Sass, no Node, no CDN.** The framework's compiled CSS and JS are vendored and served through Hugo Pipes, fingerprinted with Subresource Integrity. The **standard** Hugo binary is enough — you do not need the extended build, and the site works offline and under a strict CSP.
 - **Blog and docs in one theme.** Post grids, taxonomies, pagination, RSS; plus a weighted docs tree, breadcrumbs and in-page contents.
 - **Search with no library.** The index is a page resource built at compile time; the whole search runs in the browser.
-- **Right-to-left.** One config line mirrors the layout. The bevels deliberately do not mirror — Windows does not mirror them either.
+- **Right-to-left.** One config line mirrors the layout. The bevels deliberately do not mirror — the desktops they imitate did not mirror them either.
 
 ## Screens
 
@@ -36,7 +36,7 @@ Every shot below is the demo site in this repository, captured from the built ou
 
 | | |
 | --- | --- |
-| ![Home page in dark mode: sidebar with sections, archive and tag cloud, a featured post card, and a grid of post cards](https://raw.githubusercontent.com/PhantomPixelDev/hugo-theme-retrocss/main/images/home-dark.png) **Home, dark** | ![A blog post in light mode: breadcrumbs, hero image, byline, prose, and a code block with a Windows 95 title bar](https://raw.githubusercontent.com/PhantomPixelDev/hugo-theme-retrocss/main/images/post.png) **Post, light** |
+| ![Home page in dark mode: sidebar with sections, archive and tag cloud, a featured post card, and a grid of post cards](https://raw.githubusercontent.com/PhantomPixelDev/hugo-theme-retrocss/main/images/home-dark.png) **Home, dark** | ![A blog post in light mode: breadcrumbs, hero image, byline, prose, and a code block with a 90s-style title bar](https://raw.githubusercontent.com/PhantomPixelDev/hugo-theme-retrocss/main/images/post.png) **Post, light** |
 | ![A documentation page in dark mode: section tree, in-page contents, and the shortcode gallery showing alerts and cards](https://raw.githubusercontent.com/PhantomPixelDev/hugo-theme-retrocss/main/images/docs.png) **Docs, dark** | ![The search page in light mode showing three ranked results for the query "dark"](https://raw.githubusercontent.com/PhantomPixelDev/hugo-theme-retrocss/main/images/search.png) **Search, light** |
 
 ## Requirements
@@ -97,7 +97,7 @@ capitalizeListTitles = false
 
 [params]
   description = "Notes on building interfaces that look like 1995 and behave like today."
-  tagline = "a Windows 95/98 Hugo theme"   # appended to the home page's <title>
+  tagline = "a Win9x-style Hugo theme"     # appended to the home page's <title>
 
   # --- chrome ---
   accentHue = "primary"   # any RetroCSS hue: teal, violet, gold, navy, …
@@ -234,6 +234,10 @@ The script refuses to vendor a `dist/` older than its `src/`, strips the sourcem
 ## Credits
 
 Built on [RetroCSS](https://github.com/PhantomPixelDev/RetroCSS) by PhantomPixelDev. The demo site's cover art ships with RetroCSS.
+
+## Trademarks
+
+This theme imitates the visual style of mid-1990s desktop software. It is an independent project, **not affiliated with, sponsored by, or endorsed by Microsoft**. Windows is a trademark of Microsoft Corporation; it is named here only to describe the look the theme reproduces, and no Microsoft artwork, icon or font is included.
 
 ## License
 

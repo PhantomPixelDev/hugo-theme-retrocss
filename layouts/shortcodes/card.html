@@ -1,4 +1,4 @@
-{{- /* {{< card header="Windows 95" footer="OK" >}}body{{< /card >}} */ -}}
+{{- /* {{< card header="System Properties" footer="OK" >}}body{{< /card >}} */ -}}
 <div class="retro-card{{ with .Get "class" }} {{ . }}{{ end }}">
   {{- with .Get "header" }}<div class="retro-card-header">{{ . }}</div>{{ end }}
   {{- with .Get "image" }}<img class="retro-card-image" src="{{ . | relURL }}" alt="{{ $.Get "imageAlt" }}" loading="lazy">{{ end }}

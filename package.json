@@ -2,7 +2,7 @@
   "name": "hugo-theme-retrocss",
   "version": "0.1.0",
   "private": true,
-  "description": "Windows 95/98 Hugo theme for blogs and documentation, built on RetroCSS.",
+  "description": "Win9x-style Hugo theme for blogs and documentation, built on RetroCSS.",
   "license": "MIT",
   "author": "PhantomPixelDev",
   "repository": {

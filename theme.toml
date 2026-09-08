@@ -1,15 +1,16 @@
-name = "RetroCSS"
+name = "RetroCSS 9x"
 license = "MIT"
 licenselink = "https://github.com/PhantomPixelDev/hugo-theme-retrocss/blob/main/LICENSE"
-description = "A Windows 95/98 Hugo theme for blogs and documentation. Authentic Win9x chrome, dark mode that follows the OS, WCAG AA contrast in both themes, keyboard-operable components, RTL, and client-side search — built on the RetroCSS framework, with no Sass toolchain and no runtime dependencies."
+description = "A Win9x-style Hugo theme for blogs and documentation, in the visual language of the mid-90s desktop: raised and sunken bevels, square corners, a grey chassis. Dark mode that follows the OS, WCAG AA contrast in both themes, keyboard-operable components, RTL and client-side search — built on the RetroCSS framework, with no Sass toolchain and no runtime dependencies. Not affiliated with or endorsed by Microsoft."
 homepage = "https://github.com/PhantomPixelDev/hugo-theme-retrocss"
 demosite = "https://phantompixeldev.github.io/hugo-theme-retrocss/"
 min_version = "0.158.0"
 
 tags = [
-  "blog", "docs", "documentation", "retro", "windows-95", "windows-98", "win9x",
-  "vaporwave", "pixel", "dark-mode", "accessibility", "wcag", "rtl",
-  "responsive", "search", "taxonomy", "syntax-highlighting", "no-js-required",
+  "blog", "docs", "documentation", "retro", "win9x", "win95", "90s",
+  "desktop-ui", "vaporwave", "pixel", "dark-mode", "accessibility", "wcag",
+  "rtl", "responsive", "search", "taxonomy", "syntax-highlighting",
+  "no-js-required",
 ]
 
 features = [

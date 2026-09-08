@@ -20,7 +20,7 @@ A warning with no header.
 
 ## Cards
 
-{{< card header="Windows 95" footer="OK" >}}
+{{< card header="System Properties" footer="OK" >}}
 Cards take `header`, `footer`, `image` and `imageAlt`.
 {{< /card >}}
 

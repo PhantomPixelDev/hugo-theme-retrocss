@@ -18,8 +18,8 @@ capitalizeListTitles = false
 
 [params]
   # Read by the theme for the home page's <title>, after the site title.
-  tagline = "a Windows 95/98 Hugo theme for blogs and docs"
-  description = "Demo site for hugo-theme-retrocss, a free Windows 95/98 Hugo theme for blogs and documentation: retro Win9x chrome, dark mode, WCAG AA contrast, RTL and client-side search."
+  tagline = "a Win9x-style Hugo theme for blogs and docs"
+  description = "Demo site for RetroCSS 9x, a free Win9x-style Hugo theme for blogs and documentation, in the visual language of the mid-90s desktop: retro chrome, dark mode, WCAG AA contrast, RTL and client-side search."
   accentHue = "primary"
   borderRadius = "0"
   sidebar = "left"

@@ -30,6 +30,15 @@ It is [RetroCSS](https://github.com/PhantomPixelDev/RetroCSS) — a Windows 95/9
 - **Search with no library.** The index is a page resource built at compile time; the whole search runs in the browser.
 - **Right-to-left.** One config line mirrors the layout. The bevels deliberately do not mirror — Windows does not mirror them either.
 
+## Screens
+
+Every shot below is the demo site in this repository, captured from the built output by `node scripts/screenshots.mjs` — so they cannot drift from what the theme actually renders.
+
+| | |
+| --- | --- |
+| ![Home page in dark mode: sidebar with sections, archive and tag cloud, a featured post card, and a grid of post cards](images/home-dark.png) **Home, dark** | ![A blog post in light mode: breadcrumbs, hero image, byline, prose, and a code block with a Windows 95 title bar](images/post.png) **Post, light** |
+| ![A documentation page in dark mode: section tree, in-page contents, and the shortcode gallery showing alerts and cards](images/docs.png) **Docs, dark** | ![The search page in light mode showing three ranked results for the query "dark"](images/search.png) **Search, light** |
+
 ## Requirements
 
 Hugo **0.158.0 or newer**. The standard build is fine; extended is not required.

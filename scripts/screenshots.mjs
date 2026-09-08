@@ -14,9 +14,15 @@ import { join } from 'node:path';
 import process from 'node:process';
 import { serveSite, primeTheme, freezeMotion } from './lib/harness.mjs';
 
+// The first two are the gallery's required sizes and filenames; do not rename
+// them. The rest are for the README, one per layout the theme is judged on.
 const SHOTS = [
   { file: 'screenshot.png', width: 1500, height: 1000, page: '', theme: 'light' },
   { file: 'tn.png', width: 900, height: 600, page: '', theme: 'dark' },
+  { file: 'home-dark.png', width: 1400, height: 900, page: '', theme: 'dark' },
+  { file: 'post.png', width: 1400, height: 900, page: 'posts/painting-the-right-theme/', theme: 'light' },
+  { file: 'docs.png', width: 1400, height: 900, page: 'docs/shortcodes/', theme: 'dark' },
+  { file: 'search.png', width: 1400, height: 900, page: 'search/?q=dark', theme: 'light' },
 ];
 
 const OUT = join(process.cwd(), 'images');
@@ -35,6 +41,9 @@ for (const shot of SHOTS) {
   await tab.goto(`${origin}/${shot.page}`, { waitUntil: 'load' });
   await freezeMotion(tab);
   await tab.evaluate(() => document.fonts?.ready);
+  // The search page renders from a fetched index, so give the deferred script a
+  // moment to land before capturing an empty results list.
+  await tab.waitForTimeout(500);
   await tab.screenshot({ path: join(OUT, shot.file) });
   console.log(`wrote images/${shot.file} (${shot.width}x${shot.height}, ${shot.theme})`);
   await ctx.close();

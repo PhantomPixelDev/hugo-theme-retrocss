@@ -60,7 +60,9 @@ export async function serveSite(root = SITE_ROOT) {
     // Strip the query and normalise before joining, so a request cannot walk
     // out of the site root.
     const rel = normalize(decodeURIComponent(req.url.split('?')[0])).replace(/^[/\\]+/, '');
-    const path = join(root, rel || 'index.html');
+    // Hugo publishes pretty URLs as directories, so a request for /posts/x/
+    // has to resolve to that directory's index.html rather than 404.
+    const path = extname(rel) ? join(root, rel) : join(root, rel, 'index.html');
     if (!path.startsWith(root)) {
       res.writeHead(403).end();
       return;

@@ -122,6 +122,23 @@ capitalizeListTitles = false
 
 Full reference: **[the theme's own docs](https://phantompixeldev.github.io/hugo-theme-retrocss/docs/)**, which are themselves a docs section built with the theme.
 
+### Docs section
+
+Docs layouts are chosen by page type, so set it once on the section and let it
+cascade:
+
+```yaml
+---
+title: "Documentation"
+type: "docs"
+cascade:
+  type: "docs"
+---
+```
+
+Order pages with `weight`; the sidebar tree, breadcrumbs and prev/next all read
+it. A section not named `docs` also needs `params.docsSection`.
+
 ### Search page
 
 ```markdown

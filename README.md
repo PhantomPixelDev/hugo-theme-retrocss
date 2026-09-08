@@ -7,7 +7,7 @@
 [![CI](https://github.com/PhantomPixelDev/hugo-theme-retrocss/actions/workflows/ci.yml/badge.svg)](https://github.com/PhantomPixelDev/hugo-theme-retrocss/actions/workflows/ci.yml)
 [![license](https://img.shields.io/github/license/PhantomPixelDev/hugo-theme-retrocss?style=flat-square&color=lightgrey)](LICENSE)
 [![Hugo](https://img.shields.io/badge/hugo-%E2%89%A50.158.0-ff4088?style=flat-square&logo=hugo)](https://gohugo.io/)
-[![RetroCSS](https://img.shields.io/badge/RetroCSS-6.0.0-0047AB?style=flat-square)](https://github.com/PhantomPixelDev/RetroCSS)
+[![RetroCSS](https://img.shields.io/badge/RetroCSS-6.0.1-0047AB?style=flat-square)](https://github.com/PhantomPixelDev/RetroCSS)
 
 **[📺 Live demo](https://phantompixeldev.github.io/hugo-theme-retrocss/) • [🎨 RetroCSS](https://github.com/PhantomPixelDev/RetroCSS) • [📖 Theme docs](https://phantompixeldev.github.io/hugo-theme-retrocss/docs/)**
 

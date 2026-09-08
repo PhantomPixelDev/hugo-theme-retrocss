@@ -26,21 +26,40 @@ const useNpm = argv.includes('--npm');
 const fromArg = argv[argv.indexOf('--from') + 1];
 const from = argv.includes('--from') ? path.resolve(fromArg) : path.resolve(THEME, '..', 'RetroCSS');
 
+/** The version recorded by the last vendor run, if there was one. */
+function pinnedVersion() {
+  const file = path.join(THEME, 'data', 'retrocss.toml');
+  if (!fs.existsSync(file)) return null;
+  const m = fs.readFileSync(file, 'utf8').match(/^version\s*=\s*"([^"]+)"/m);
+  return m ? m[1] : null;
+}
+
 function die(msg) {
   console.error(`vendor-retrocss: ${msg}`);
   process.exit(1);
 }
 
-/** Unpacks the published tarball into a temp dir and returns its package root. */
+/**
+ * Unpacks the published tarball into a temp dir and returns its package root.
+ *
+ * The version comes from data/retrocss.toml, not from the registry's `latest`:
+ * this path exists so CI can prove the vendored bytes are the published ones,
+ * and a check that re-pinned itself to whatever shipped this morning would
+ * prove nothing and fail on every upstream release.
+ */
 function fromNpm() {
   const tmp = fs.mkdtempSync(path.join(os.tmpdir(), 'retrocss-'));
-  execFileSync('npm', ['pack', '@phantompixeldev/retrocss', '--pack-destination', tmp], {
+  const spec = pinnedVersion() ? `@phantompixeldev/retrocss@${pinnedVersion()}` : '@phantompixeldev/retrocss';
+  execFileSync('npm', ['pack', spec, '--pack-destination', tmp], {
     stdio: 'inherit',
     shell: process.platform === 'win32',
   });
   const tgz = fs.readdirSync(tmp).find((f) => f.endsWith('.tgz'));
   if (!tgz) die('npm pack produced no tarball');
-  execFileSync('tar', ['-xzf', path.join(tmp, tgz), '-C', tmp]);
+  // Relative filename with cwd, not an absolute path: GNU tar (which is what
+  // Git Bash ships on Windows) reads "C:\..." as a remote host and fails with
+  // "Cannot connect to C: resolve failed".
+  execFileSync('tar', ['-xzf', tgz], { cwd: tmp });
   return path.join(tmp, 'package');
 }
 

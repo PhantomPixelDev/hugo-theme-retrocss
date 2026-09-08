@@ -1,0 +1,30 @@
+{{- $c := site.Params.comments -}}
+{{- $provider := $c.provider | default "none" -}}
+{{- if and (ne $provider "none") (ne .Params.comments false) }}
+<div class="retro-card retro-mb-5" id="comments">
+  <div class="retro-card-header">{{ i18n "comments" | default "Comments" }}</div>
+  <div class="retro-card-content">
+    {{- if eq $provider "giscus" }}
+    <script src="https://giscus.app/client.js"
+            data-repo="{{ $c.giscus.repo }}"
+            data-repo-id="{{ $c.giscus.repoId }}"
+            data-category="{{ $c.giscus.category }}"
+            data-category-id="{{ $c.giscus.categoryId }}"
+            data-mapping="{{ $c.giscus.mapping | default "pathname" }}"
+            data-reactions-enabled="1"
+            data-emit-metadata="0"
+            data-theme="{{ $c.giscus.theme | default "preferred_color_scheme" }}"
+            data-lang="{{ site.Language.Lang }}"
+            crossorigin="anonymous" async></script>
+    {{- else if eq $provider "utterances" }}
+    <script src="https://utteranc.es/client.js"
+            repo="{{ $c.utterances.repo }}"
+            issue-term="{{ $c.utterances.issueTerm | default "pathname" }}"
+            label="{{ $c.utterances.label }}"
+            theme="github-light"
+            crossorigin="anonymous" async></script>
+    {{- end }}
+    <noscript>{{ i18n "commentsNoScript" | default "Comments require JavaScript." }}</noscript>
+  </div>
+</div>
+{{- end -}}

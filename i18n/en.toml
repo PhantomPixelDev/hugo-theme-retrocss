@@ -1,0 +1,86 @@
+[skipToContent]
+other = "Skip to content"
+[mainNav]
+other = "Main"
+[search]
+other = "Search"
+[searchPlaceholder]
+other = "Search this site…"
+[searchResults]
+other = "results"
+[searchNoResults]
+other = "No pages match that search."
+[searchPrompt]
+other = "Type to search."
+[toggleTheme]
+other = "Toggle theme"
+[builtWith]
+other = "Built with"
+[and]
+other = "and"
+[onThisPage]
+other = "On this page"
+[articleContents]
+other = "Article contents"
+[allPosts]
+other = "All posts"
+[filedUnder]
+other = "Filed under"
+[sections]
+other = "Sections"
+[archive]
+other = "Archive"
+[tags]
+other = "Tags"
+[readMore]
+other = "Read more"
+[readPost]
+other = "Read the post"
+[featured]
+other = "Featured"
+[minRead]
+other = "min read"
+[pagination]
+other = "Post pages"
+[newer]
+other = "Newer"
+[older]
+other = "Older"
+[page]
+other = "Page"
+[latestPosts]
+other = "Latest posts"
+[noPosts]
+other = "Nothing here yet."
+[breadcrumb]
+other = "Breadcrumb"
+[postNav]
+other = "More posts"
+[aboutAuthor]
+other = "About the author"
+[related]
+other = "Related posts"
+[comments]
+other = "Comments"
+[commentsNoScript]
+other = "Comments require JavaScript."
+[allTerms]
+other = "All"
+[postSingular]
+other = "post"
+[postPlural]
+other = "posts"
+[notFoundTitle]
+other = "This page is not available"
+[notFoundBody]
+other = "The address may be mistyped, or the page may have been moved."
+[tryInstead]
+other = "Try instead"
+[docsNav]
+other = "Documentation"
+[editThisPage]
+other = "Edit this page"
+[lastUpdated]
+other = "Last updated"
+[copy]
+other = "Copy"

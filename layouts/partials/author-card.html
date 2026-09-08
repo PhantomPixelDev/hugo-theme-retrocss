@@ -1,0 +1,19 @@
+{{- $name := .Params.author | default site.Params.author.name -}}
+{{- $bio := .Params.authorBio | default site.Params.author.bio -}}
+{{- if and $name $bio }}
+<div class="retro-card retro-mb-5">
+  <div class="retro-card-header">{{ i18n "aboutAuthor" | default "About the author" }}</div>
+  <div class="retro-card-content">
+    <div class="author-card">
+      <span class="retro-avatar retro-avatar-lg retro-bg-primary" aria-hidden="true">
+        {{- $initials := .Params.authorInitials | default site.Params.author.initials -}}
+        {{- if not $initials }}{{ range first 2 (split $name " ") }}{{ substr . 0 1 }}{{ end }}{{ else }}{{ $initials }}{{ end -}}
+      </span>
+      <div>
+        <h2 class="retro-mt-0 retro-mb-2">{{ $name }}</h2>
+        <p class="retro-mb-0">{{ $bio | markdownify }}</p>
+      </div>
+    </div>
+  </div>
+</div>
+{{- end -}}

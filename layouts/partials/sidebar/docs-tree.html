@@ -1,0 +1,15 @@
+{{- /* One level of the docs tree, recursing into subsections. Ordered by
+       weight, which is what a documentation set is written in. */ -}}
+{{- $current := .current -}}
+{{- $children := union .page.Sections .page.RegularPages -}}
+{{- with $children.ByWeight }}
+<ul>
+  {{- range . }}
+  <li>
+    <a class="retro-nav-item" href="{{ .RelPermalink }}"
+       {{- if eq . $current }} aria-current="page"{{ else if $current.IsDescendant . }} aria-current="true"{{ end }}>{{ .LinkTitle }}</a>
+    {{- if .IsSection }}{{ partial "sidebar/docs-tree.html" (dict "page" . "current" $current) }}{{ end }}
+  </li>
+  {{- end }}
+</ul>
+{{- end -}}

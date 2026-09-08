@@ -1,0 +1,23 @@
+{{- $section := site.GetPage (printf "/%s" (site.Params.docsSection | default "docs")) -}}
+{{- $ordered := slice -}}
+{{- if $section }}{{ $ordered = $section.RegularPagesRecursive.ByWeight }}{{ end -}}
+{{- $prev := "" }}{{ $next := "" }}
+{{- range $i, $p := $ordered -}}
+  {{- if eq $p $ }}
+    {{- if gt $i 0 }}{{ $prev = index $ordered (sub $i 1) }}{{ end -}}
+    {{- if lt (add $i 1) (len $ordered) }}{{ $next = index $ordered (add $i 1) }}{{ end -}}
+  {{- end -}}
+{{- end }}
+{{- if or $prev $next }}
+<nav class="post-nav retro-mb-5" aria-label="{{ i18n "docsNav" | default "Documentation" }}">
+  {{- with $prev }}<a class="retro-btn" href="{{ .RelPermalink }}" rel="prev">&laquo; {{ .LinkTitle }}</a>
+  {{- else }}<span></span>{{ end }}
+  {{- with $next }}<a class="retro-btn" href="{{ .RelPermalink }}" rel="next">{{ .LinkTitle }} &raquo;</a>{{ end }}
+</nav>
+{{- end }}
+{{- if or .Lastmod site.Params.editURL }}
+<p class="retro-text-sm retro-text-muted">
+  {{- if not .Lastmod.IsZero }}{{ i18n "lastUpdated" | default "Last updated" }}: {{ .Lastmod.Format (site.Params.dateFormat | default "2 January 2006") }}{{ end }}
+  {{- with site.Params.editURL }} &middot; <a href="{{ . }}{{ $.File.Path }}">{{ i18n "editThisPage" | default "Edit this page" }}</a>{{ end }}
+</p>
+{{- end -}}

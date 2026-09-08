@@ -1,0 +1,13 @@
+{{- $retro := index hugo.Data "retrocss" -}}
+<footer class="site-footer">
+  <p>
+    {{ with site.Copyright }}{{ . | markdownify }}{{ else }}&copy; {{ now.Year }} {{ site.Title }}{{ end }}
+  </p>
+  <p class="retro-text-sm retro-text-muted">
+    {{ i18n "builtWith" | default "Built with" }}
+    <a href="https://gohugo.io/">Hugo</a>
+    {{ i18n "and" | default "and" }}
+    <a href="https://github.com/PhantomPixelDev/RetroCSS">RetroCSS{{ with $retro }} {{ .version }}{{ end }}</a>
+    {{- with .OutputFormats.Get "rss" }} &middot; <a href="{{ .RelPermalink }}">RSS</a>{{ end -}}
+  </p>
+</footer>

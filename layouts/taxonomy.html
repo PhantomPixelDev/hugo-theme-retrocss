@@ -1,0 +1,16 @@
+{{ define "main" }}
+  {{- partial "breadcrumbs.html" . }}
+  <h1>{{ .Title }}</h1>
+  {{- with .Content }}<div class="retro-prose retro-mb-4">{{ . }}</div>{{ end }}
+  <div class="retro-card retro-mb-5">
+    <div class="retro-card-header">{{ i18n "allTerms" | default "All" }} {{ .Title | lower }}</div>
+    <div class="retro-card-content">
+      <div class="tag-cloud">
+        {{- range .Pages.ByTitle }}
+        <a class="retro-badge {{ partial "func/hue-class.html" (dict "term" .LinkTitle "prefix" "retro-badge") }}"
+           href="{{ .RelPermalink }}">{{ .LinkTitle }} ({{ len .Pages }})</a>
+        {{- end }}
+      </div>
+    </div>
+  </div>
+{{ end }}

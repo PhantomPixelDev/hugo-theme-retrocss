@@ -1,0 +1,12 @@
+{{- /* {{< modal id="specs" title="Specifications" trigger="View specs" >}}…{{< /modal >}} */ -}}
+{{- $id := .Get "id" | default (printf "modal-%d" .Ordinal) -}}
+{{- with .Get "trigger" }}
+<button class="retro-btn" type="button" data-retro-modal="{{ $id }}">{{ . }}</button>
+{{- end }}
+<div class="retro-modal" id="{{ $id }}">
+  <div class="retro-modal-content">
+    {{- with .Get "title" }}<div class="retro-modal-header">{{ . }}</div>{{ end }}
+    <div class="retro-modal-body">{{ .Inner | .Page.RenderString (dict "display" "block") }}</div>
+    {{- with .Get "footer" }}<div class="retro-modal-footer">{{ . }}</div>{{ end }}
+  </div>
+</div>

@@ -1,0 +1,6 @@
+{{- $title := .Get "title" | default (printf "Item %d" (add .Ordinal 1)) -}}
+{{- with .Parent -}}
+  {{- .Store.Add "items" (slice (dict "title" $title "content" ($.Inner | $.Page.RenderString (dict "display" "block")))) -}}
+{{- else -}}
+  {{- errorf "the accordion-item shortcode must be used inside accordion (%s)" .Position -}}
+{{- end -}}

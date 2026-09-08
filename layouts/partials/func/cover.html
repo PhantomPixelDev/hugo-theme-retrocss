@@ -1,0 +1,10 @@
+{{- /*
+  Resolves a page's cover image to a URL, in the order a page bundle, an
+  explicit `cover` param, then the first entry of `images`. Returns "" when the
+  page has none, so callers can drop the <img> entirely.
+*/ -}}
+{{- $url := "" -}}
+{{- with .Resources.GetMatch "{cover,feature,thumbnail}.*" }}{{ $url = .RelPermalink }}{{ end -}}
+{{- if not $url }}{{ with .Params.cover }}{{ $url = . | relURL }}{{ end }}{{ end -}}
+{{- if not $url }}{{ with .Params.images }}{{ $url = index . 0 | relURL }}{{ end }}{{ end -}}
+{{- return $url -}}

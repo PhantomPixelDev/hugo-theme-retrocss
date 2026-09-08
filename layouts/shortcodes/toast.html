@@ -1,0 +1,7 @@
+{{- /* {{< toast message="Saved to disk" type="success" >}}Save{{< /toast >}} */ -}}
+<button class="retro-btn{{ with .Get "type" }} retro-btn-{{ . }}{{ end }}" type="button"
+        data-retro-toast="{{ .Get "message" }}"
+        {{- with .Get "type" }} data-retro-toast-type="{{ . }}"{{ end }}
+        {{- with .Get "duration" }} data-retro-toast-duration="{{ . }}"{{ end }}>
+  {{ .Inner | .Page.RenderString | default (.Get "message") }}
+</button>

@@ -1,0 +1,5 @@
+{{- with .Parent -}}
+  {{- .Store.Add "slides" (slice ($.Inner | $.Page.RenderString (dict "display" "block"))) -}}
+{{- else -}}
+  {{- errorf "the slide shortcode must be used inside carousel (%s)" .Position -}}
+{{- end -}}

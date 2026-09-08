@@ -1,0 +1,48 @@
+baseURL = "https://phantompixeldev.github.io/hugo-theme-retrocss/"
+locale = "en-us"
+title = "Retro Dispatch"
+theme = "hugo-theme-retrocss"
+copyright = "© 2026 Retro Dispatch"
+enableRobotsTXT = true
+enableEmoji = true
+
+# Hugo does not merge a theme's markup/outputs config into the site's, so these
+# live here. capitalizeListTitles keeps tags reading as they were written.
+capitalizeListTitles = false
+
+[markup.goldmark.renderer]
+  unsafe = true
+
+[pagination]
+  pagerSize = 6
+
+[params]
+  description = "Notes on building interfaces that look like 1995 and behave like today."
+  accentHue = "primary"
+  borderRadius = "0"
+  sidebar = "left"
+  dateFormat = "2 January 2006"
+  showReadingTime = true
+  showToc = true
+  search = true
+  mainSections = ["posts"]
+  images = ["images/og-card.png"]
+
+  [params.author]
+    name = "Rita Delgado"
+    initials = "RD"
+    bio = "Writes about interface archaeology and the parts of the web that refuse to die."
+
+[menus]
+  [[menus.main]]
+    name = "Posts"
+    pageRef = "/posts"
+    weight = 10
+  [[menus.main]]
+    name = "Docs"
+    pageRef = "/docs"
+    weight = 20
+  [[menus.main]]
+    name = "Tags"
+    pageRef = "/tags"
+    weight = 30

@@ -1,0 +1,16 @@
+{{ define "main" }}
+  {{- partial "breadcrumbs.html" . }}
+  <article class="retro-card retro-mb-5">
+    <div class="retro-card-header">{{ with .Parent }}{{ .LinkTitle }}{{ else }}{{ site.Title }}{{ end }}</div>
+    <div class="retro-card-content">
+      <div class="article-body">
+        <h1>{{ .Title }}</h1>
+        {{- with .Description }}<p class="article-lede">{{ . | markdownify }}</p>{{ end }}
+        <div class="retro-prose">
+          {{ .Content }}
+        </div>
+      </div>
+    </div>
+  </article>
+  {{- partial "docs-footer.html" . }}
+{{ end }}

@@ -1,0 +1,10 @@
+{{- /*
+  Every post on the site, newest first.
+
+  Sections are read from params.mainSections, Hugo's own convention — which
+  defaults to the section holding the most pages, so a site that renames
+  "posts" to "blog" needs no configuration at all.
+*/ -}}
+{{- $sections := site.Params.mainSections -}}
+{{- if not $sections }}{{ $sections = slice "posts" }}{{ end -}}
+{{- return (where site.RegularPages "Section" "in" $sections) -}}

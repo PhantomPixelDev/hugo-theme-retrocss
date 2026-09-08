@@ -1,0 +1,22 @@
+{{- $cover := partial "func/cover.html" . -}}
+<article class="retro-card retro-mb-5 retro-shadow-lg">
+  <div class="retro-card-header retro-flex retro-items-center retro-gap-2">
+    <span class="retro-badge retro-badge-primary">{{ i18n "featured" | default "Featured" }}</span>
+    {{- with (.GetTerms "categories") }}<span>{{ (index . 0).LinkTitle }}</span>{{ end }}
+  </div>
+  <div class="retro-card-content">
+    <div class="featured-body">
+      {{- with $cover }}
+      <img class="post-cover" src="{{ . }}" alt="" loading="eager" decoding="async">
+      {{- end }}
+      <div>
+        <h2><a href="{{ .RelPermalink }}">{{ .LinkTitle }}</a></h2>
+        {{- partial "post-meta.html" . }}
+        <p>{{ .Description | default (.Summary | plainify | truncate 280) }}</p>
+        <a class="retro-btn retro-btn-primary" href="{{ .RelPermalink }}">
+          {{ i18n "readPost" | default "Read the post" }}<span class="retro-sr-only">: {{ .LinkTitle }}</span>
+        </a>
+      </div>
+    </div>
+  </div>
+</article>

@@ -1,0 +1,36 @@
+<div class="retro-container">
+  <nav class="retro-nav" aria-label="{{ i18n "mainNav" | default "Main" }}">
+    <a class="retro-nav-item" href="{{ site.Home.RelPermalink }}"{{ if .IsHome }} aria-current="page"{{ end }}>{{ site.Title }}</a>
+
+    {{- range site.Menus.main }}
+      {{- if .HasChildren }}
+    <div class="retro-dropdown">
+      <button class="retro-nav-item retro-dropdown-toggle" type="button">{{ .Name }}</button>
+      <div class="retro-dropdown-menu">
+        {{- range .Children }}
+        <a class="retro-dropdown-item" href="{{ .URL | relLangURL }}"{{ if $.IsMenuCurrent .Menu . }} aria-current="page"{{ end }}>{{ .Name }}</a>
+        {{- end }}
+      </div>
+    </div>
+      {{- else }}
+    <a class="retro-nav-item" href="{{ .URL | relLangURL }}"
+       {{- with .Title }} data-retro-tooltip="{{ . }}"{{ end }}
+       {{- if or ($.IsMenuCurrent .Menu .) ($.HasMenuCurrent .Menu .) }} aria-current="page"{{ end }}>{{ .Name }}</a>
+      {{- end }}
+    {{- end }}
+
+    {{- if site.Params.search }}
+    <a class="retro-nav-item" href="{{ "search/" | relLangURL }}" data-retro-tooltip="{{ i18n "search" | default "Search" }}">{{ i18n "search" | default "Search" }}</a>
+    {{- end }}
+
+    {{- range .Translations }}
+    <a class="retro-nav-item" href="{{ .RelPermalink }}" lang="{{ .Language.Lang }}"
+       hreflang="{{ .Language.Lang }}">{{ .Language.LanguageName | default .Language.Lang }}</a>
+    {{- end }}
+
+    <button class="retro-nav-item retro-theme-toggle" type="button"
+            data-retro-tooltip="{{ i18n "toggleTheme" | default "Toggle dark/light mode" }}">
+      {{ i18n "toggleTheme" | default "Toggle Theme" }}
+    </button>
+  </nav>
+</div>

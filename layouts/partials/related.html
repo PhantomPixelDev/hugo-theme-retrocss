@@ -1,0 +1,19 @@
+{{- $limit := site.Params.relatedPosts | default 3 -}}
+{{- $related := first $limit (site.RegularPages.Related .) -}}
+{{- with $related }}
+<div class="retro-card retro-mb-5">
+  <div class="retro-card-header">{{ i18n "related" | default "Related posts" }}</div>
+  <div class="retro-card-content">
+    <div class="related-grid">
+      {{- range . }}
+      <a class="related-item" href="{{ .RelPermalink }}">
+        <strong>{{ .LinkTitle }}</strong>
+        {{- if not .Date.IsZero }}
+        <span class="retro-text-sm retro-text-muted">{{ .Date.Format (site.Params.dateFormat | default "2 January 2006") }}</span>
+        {{- end }}
+      </a>
+      {{- end }}
+    </div>
+  </div>
+</div>
+{{- end -}}

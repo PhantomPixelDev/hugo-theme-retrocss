@@ -1,0 +1,11 @@
+{{- $tags := .GetTerms "tags" -}}
+{{- with $tags }}
+<div class="sidebar-widget">
+  <div class="retro-sidebar-group">{{ i18n "filedUnder" | default "Filed under" }}</div>
+  <div class="retro-flex retro-flex-wrap retro-gap-1">
+    {{- range . }}
+    <a class="retro-badge {{ partial "func/hue-class.html" (dict "term" .LinkTitle "prefix" "retro-badge") }}" href="{{ .RelPermalink }}">{{ .LinkTitle }}</a>
+    {{- end }}
+  </div>
+</div>
+{{- end -}}

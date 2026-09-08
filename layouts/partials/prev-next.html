@@ -1,0 +1,10 @@
+{{- if or .PrevInSection .NextInSection }}
+<nav class="post-nav retro-mb-5" aria-label="{{ i18n "postNav" | default "More posts" }}">
+  {{- with .PrevInSection }}
+  <a class="retro-btn" href="{{ .RelPermalink }}" rel="prev">&laquo; {{ .LinkTitle }}</a>
+  {{- else }}<span></span>{{ end }}
+  {{- with .NextInSection }}
+  <a class="retro-btn" href="{{ .RelPermalink }}" rel="next">{{ .LinkTitle }} &raquo;</a>
+  {{- end }}
+</nav>
+{{- end -}}

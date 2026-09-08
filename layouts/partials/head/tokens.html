@@ -1,0 +1,24 @@
+{{- /*
+  Site-level token overrides, emitted only when they differ from the framework
+  defaults. Every hue ships a full four-tier set plus -rgb, and the dark palette
+  redefines all of them, so aliasing --retro-primary onto another hue re-themes
+  the whole site in both modes from one config value.
+*/ -}}
+{{- $hue := site.Params.accentHue | default "primary" -}}
+{{- $radius := site.Params.borderRadius | default "0" -}}
+{{- $font := site.Params.fontHeading -}}
+{{- $rules := slice -}}
+{{- if and $hue (ne $hue "primary") -}}
+  {{- range (slice "" "-fg" "-text" "-hover" "-active" "-rgb") -}}
+    {{- $rules = $rules | append (printf "--retro-primary%s: var(--retro-%s%s);" . $hue .) -}}
+  {{- end -}}
+{{- end -}}
+{{- if and $radius (ne (string $radius) "0") -}}
+  {{- $rules = $rules | append (printf "--retro-border-radius: %s;" $radius) -}}
+{{- end -}}
+{{- with $font -}}
+  {{- $rules = $rules | append (printf "--retro-font-heading: %s;" .) -}}
+{{- end -}}
+{{- with $rules }}
+<style>:root { {{ delimit . " " | safeCSS }} }</style>
+{{- end -}}

@@ -1,0 +1,16 @@
+# Hugo
+public/
+resources/
+.hugo_build.lock
+
+# Node
+node_modules/
+npm-debug.log*
+
+# Editors / OS
+.DS_Store
+Thumbs.db
+*.swp
+
+# Test output
+test-results/

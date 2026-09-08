@@ -1,0 +1,8 @@
+{{- /*
+  Picks a hue for a term, deterministically from its name, so a tag keeps the
+  same colour everywhere it appears. Only hues with the requested variant are
+  eligible — the framework ships .retro-badge-info but not .retro-badge-teal.
+*/ -}}
+{{- $hues := slice "primary" "success" "warning" "danger" "info" "secondary" -}}
+{{- $i := mod (hash.FNV32a (lower .term)) (len $hues) -}}
+{{- return (printf "%s-%s" .prefix (index $hues $i)) -}}

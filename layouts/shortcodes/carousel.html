@@ -1,0 +1,21 @@
+{{- /*
+  {{< carousel >}}
+    {{< slide >}}![Alt](image.png){{< /slide >}}
+  {{< /carousel >}}
+*/ -}}
+{{- /* Hugo renders nested shortcodes before their parent, so the children have
+       already registered themselves by the time this runs. .Inner is still
+       referenced (and discarded): Hugo rejects a paired shortcode that never
+       touches it, and resetting the store here would wipe the children. */ -}}
+{{- $_ := .Inner -}}
+{{- $slides := .Store.Get "slides" -}}
+{{- with $slides }}
+<div class="retro-carousel"{{ with $.Get "label" }} aria-label="{{ . }}"{{ end }}>
+  <div class="retro-carousel-track">
+    {{- range . }}
+    <div class="retro-carousel-slide">{{ . }}</div>
+    {{- end }}
+  </div>
+  <div class="retro-carousel-dots"></div>
+</div>
+{{- end -}}

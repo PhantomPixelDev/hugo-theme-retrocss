@@ -1,0 +1,35 @@
+{{- /*
+  {{< tabs >}}
+    {{< tab title="npm" >}}…{{< /tab >}}
+    {{< tab title="yarn" >}}…{{< /tab >}}
+  {{< /tabs >}}
+
+  The framework wires any .retro-nav-tabbed followed by a .retro-tab-pane: it
+  owns the roving tabindex, aria-selected, and which pane is displayed. This
+  template only has to emit the pair and name the panels.
+*/ -}}
+{{- /* Hugo renders nested shortcodes before their parent, so the children have
+       already registered themselves by the time this runs. .Inner is still
+       referenced (and discarded): Hugo rejects a paired shortcode that never
+       touches it, and resetting the store here would wipe the children. */ -}}
+{{- $_ := .Inner -}}
+{{- $tabs := .Store.Get "tabs" -}}
+{{- $id := printf "tabs-%d" .Ordinal -}}
+{{- with $tabs }}
+<nav class="retro-nav-tabbed" role="tablist">
+  {{- range $i, $tab := . }}
+  <button class="retro-nav-item{{ if eq $i 0 }} active{{ end }}" type="button" role="tab"
+          id="{{ $id }}-tab-{{ $i }}" aria-controls="{{ $id }}-panel-{{ $i }}"
+          aria-selected="{{ if eq $i 0 }}true{{ else }}false{{ end }}">{{ $tab.title }}</button>
+  {{- end }}
+</nav>
+<div class="retro-tab-pane">
+  {{- range $i, $tab := . }}
+  {{/* No `active` class on the panel: the framework switches panels with an
+       inline display, and a class that looks like state but is not one is
+       worse than none. */}}
+  <div class="retro-tab-content" role="tabpanel" id="{{ $id }}-panel-{{ $i }}"
+       aria-labelledby="{{ $id }}-tab-{{ $i }}" tabindex="0">{{ $tab.content }}</div>
+  {{- end }}
+</div>
+{{- end -}}

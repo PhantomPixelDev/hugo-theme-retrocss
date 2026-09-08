@@ -1,0 +1,130 @@
+/*
+ * Layout glue for hugo-theme-retrocss.
+ *
+ * Everything visual comes from RetroCSS components and tokens; this file only
+ * arranges them into page shapes Hugo needs (a post grid, an article column, a
+ * comment thread). No colour is hardcoded — each one reads a --retro-* token,
+ * so both themes and every accent hue follow automatically.
+ */
+
+/* --- post grid ---------------------------------------------------------- */
+.post-grid {
+  display: grid;
+  gap: var(--retro-spacing-md);
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+}
+/* Equal heights: a ragged bottom row is the first thing that makes a card grid
+   look unfinished, and excerpts are never the same length. */
+.post-grid > article { display: flex; flex-direction: column; margin-bottom: 0; }
+.post-grid .retro-card-content { display: flex; flex-direction: column; flex: 1; }
+/* The card body is a flex column, so its children stretch across the cross axis
+   by default — which turns every badge and Read more button into a full-width
+   bar. */
+.post-grid .retro-card-content > .retro-badge,
+.post-grid .retro-card-content > .retro-btn { align-self: flex-start; }
+
+.post-cover {
+  display: block;
+  width: 100%;
+  height: auto;
+  /* Reserving the ratio stops the grid reflowing as covers decode, which is
+     what makes a card list jump about on load. */
+  aspect-ratio: 3 / 2;
+  object-fit: cover;
+}
+.post-title { margin: 0 0 var(--retro-spacing-xs); font-size: var(--retro-font-size-lg); }
+.post-title a { text-decoration: none; }
+.post-title a:hover { text-decoration: underline; }
+.post-excerpt { flex: 1; margin: 0 0 var(--retro-spacing-md); }
+.post-meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--retro-spacing-xs) var(--retro-spacing-sm);
+  margin-bottom: var(--retro-spacing-sm);
+  font-size: var(--retro-font-size-sm);
+  color: var(--retro-text-muted);
+}
+
+/* --- featured post ------------------------------------------------------ */
+.featured-body { display: grid; gap: var(--retro-spacing-lg); }
+@media (min-width: 760px) {
+  .featured-body { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); align-items: center; }
+}
+.featured-body h2 {
+  margin: 0 0 var(--retro-spacing-sm);
+  font-size: clamp(1.3rem, 1rem + 1.6vw, 1.9rem);
+  line-height: 1.2;
+}
+.featured-body h2 a { text-decoration: none; }
+.featured-body h2 a:hover { text-decoration: underline; }
+
+/* --- article ------------------------------------------------------------ */
+.article-hero {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 3 / 2;
+  object-fit: cover;
+  max-height: 22rem;
+}
+.article-body { max-width: 72ch; }
+.article-lede {
+  font-size: var(--retro-font-size-lg);
+  color: var(--retro-text-muted);
+}
+.article-body figure { margin: var(--retro-spacing-lg) 0; }
+.article-body figure img { display: block; width: 100%; height: auto; }
+.article-body figcaption {
+  margin-top: var(--retro-spacing-xs);
+  font-size: var(--retro-font-size-sm);
+  color: var(--retro-text-muted);
+}
+/* The heading anchor stays out of the way until the heading is hovered or the
+   link itself is focused, so it never reads as part of the title. */
+.heading-anchor {
+  margin-inline-start: var(--retro-spacing-xs);
+  opacity: 0;
+  text-decoration: none;
+}
+:is(h2, h3, h4, h5, h6):hover > .heading-anchor,
+.heading-anchor:focus-visible { opacity: 1; }
+
+.post-nav { display: flex; flex-wrap: wrap; justify-content: space-between; gap: var(--retro-spacing-sm); }
+.author-card { display: flex; gap: var(--retro-spacing-md); align-items: flex-start; }
+.related-grid { display: grid; gap: var(--retro-spacing-sm); grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); }
+.related-item { display: flex; flex-direction: column; gap: 2px; text-decoration: none; }
+.related-item:hover strong { text-decoration: underline; }
+
+/* --- sidebar ------------------------------------------------------------ */
+.sidebar-widget { margin-bottom: var(--retro-spacing-lg); }
+.tag-cloud { display: flex; flex-wrap: wrap; gap: var(--retro-spacing-xs); }
+/* Hugo's table of contents is a bare nested list; these rules give it the
+   density of the framework's vertical nav without duplicating its chrome. */
+#TableOfContents ul { margin: 0; padding-inline-start: var(--retro-spacing-md); list-style: none; }
+#TableOfContents > ul { padding-inline-start: 0; }
+#TableOfContents li { margin: 0; }
+#TableOfContents a {
+  display: block;
+  padding: 2px var(--retro-spacing-xs);
+  font-size: var(--retro-font-size-sm);
+  color: var(--retro-text);
+  text-decoration: none;
+}
+#TableOfContents a:hover { text-decoration: underline; }
+
+/* --- footer ------------------------------------------------------------- */
+.site-footer {
+  margin-top: var(--retro-spacing-xl);
+  padding-top: var(--retro-spacing-md);
+  border-top: 1px solid var(--retro-border-medium);
+  color: var(--retro-text-muted);
+  font-size: var(--retro-font-size-sm);
+  text-align: center;
+}
+.site-footer p { margin: 0 0 var(--retro-spacing-xs); }
+
+/* --- search ------------------------------------------------------------- */
+.search-result { margin-bottom: var(--retro-spacing-md); }
+.search-result h2 { margin: 0 0 var(--retro-spacing-xs); font-size: var(--retro-font-size-lg); }
+.search-result mark { background: var(--retro-warning); color: var(--retro-warning-fg); }

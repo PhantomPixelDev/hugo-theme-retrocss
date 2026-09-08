@@ -1,0 +1,11 @@
+{{- /* Wraps a Markdown table so it scrolls inside its own box instead of
+       pushing the page sideways on a phone.
+       {{< table sortable="true" striped="true" >}}| a | b |
+       …{{< /table >}} */ -}}
+{{- $classes := slice "retro-table" -}}
+{{- if .Get "striped" }}{{ $classes = $classes | append "retro-table-striped" }}{{ end -}}
+{{- if .Get "bordered" }}{{ $classes = $classes | append "retro-table-bordered" }}{{ end -}}
+{{- if .Get "sortable" }}{{ $classes = $classes | append "retro-table-sortable" }}{{ end -}}
+{{- $html := .Inner | .Page.RenderString (dict "display" "block") -}}
+{{- $html = replaceRE `<table>` (printf `<table class="%s">` (delimit $classes " ")) (string $html) 1 -}}
+<div class="retro-table-responsive">{{ $html | safeHTML }}</div>

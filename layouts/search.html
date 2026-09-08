@@ -1,0 +1,53 @@
+{{ define "main" }}
+  {{- /* The index is built here rather than as a home output format: Hugo does
+         not merge a theme's `outputs` config into the site's, so an index that
+         depended on it would silently not exist on a site that forgot the
+         config line. As a page resource it always ships. */ -}}
+  {{- $pages := slice -}}
+  {{- range where site.RegularPages "Params.private" "!=" true -}}
+    {{- $terms := slice -}}
+    {{- range .GetTerms "tags" }}{{ $terms = $terms | append .LinkTitle }}{{ end -}}
+    {{- range .GetTerms "categories" }}{{ $terms = $terms | append .LinkTitle }}{{ end -}}
+    {{- $pages = $pages | append (dict
+      "title" .LinkTitle
+      "url" .RelPermalink
+      "section" .Section
+      "date" (cond .Date.IsZero "" (.Date.Format "2006-01-02"))
+      "tags" $terms
+      "summary" (.Description | default (.Summary | plainify | htmlUnescape | truncate 200))
+      "body" (.Plain | htmlUnescape | truncate 1800 "")) -}}
+  {{- end -}}
+  {{- $index := $pages | jsonify | resources.FromString "search/index.json" -}}
+  {{- if hugo.IsProduction }}{{ $index = $index | fingerprint "sha256" }}{{ end }}
+
+  <h1>{{ .Title | default (i18n "search") }}</h1>
+  {{- with .Content }}<div class="retro-prose retro-mb-4">{{ . }}</div>{{ end }}
+
+  <form class="retro-search-bar retro-mb-4" role="search" data-search-index="{{ $index.RelPermalink }}"
+        data-results-label="{{ i18n "searchResults" }}"
+        data-no-results="{{ i18n "searchNoResults" }}"
+        data-prompt="{{ i18n "searchPrompt" }}"
+        action="{{ .RelPermalink }}" method="get">
+    <label class="retro-sr-only" for="search-input">{{ i18n "search" }}</label>
+    <input class="retro-input retro-search-input" id="search-input" name="q" type="search"
+           placeholder="{{ i18n "searchPlaceholder" }}" autocomplete="off" autocapitalize="off" spellcheck="false">
+    <button class="retro-btn retro-btn-primary" type="submit">{{ i18n "search" }}</button>
+  </form>
+
+  <p id="search-status" class="retro-text-muted" role="status" aria-live="polite">{{ i18n "searchPrompt" }}</p>
+  <div id="search-results"></div>
+
+  <noscript>
+    <div class="retro-alert retro-alert-warning">
+      <div class="retro-alert-body">{{ i18n "commentsNoScript" | default "Search requires JavaScript." }}</div>
+    </div>
+  </noscript>
+{{ end }}
+
+{{ define "scripts" }}
+  {{- with resources.Get "js/search.js" }}
+    {{- $js := . }}
+    {{- if hugo.IsProduction }}{{ $js = $js | minify | fingerprint "sha384" }}{{ end }}
+    <script src="{{ $js.RelPermalink }}"{{ if hugo.IsProduction }} integrity="{{ $js.Data.Integrity }}"{{ end }} defer></script>
+  {{- end }}
+{{ end }}

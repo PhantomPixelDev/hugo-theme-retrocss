@@ -1,0 +1,4 @@
+{{- /* {{< avatar initials="RD" size="lg" hue="primary" >}} */ -}}
+{{- $size := .Get "size" -}}
+<span class="retro-avatar{{ with $size }} retro-avatar-{{ . }}{{ end }}{{ with .Get "hue" }} retro-bg-{{ . }}{{ end }}"
+      {{- with .Get "label" }} aria-label="{{ . }}"{{ else }} aria-hidden="true"{{ end }}>{{ .Get "initials" }}</span>

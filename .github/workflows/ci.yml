@@ -1,0 +1,58 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+env:
+  # Deliberately the standard build, not the extended one: the theme vendors
+  # RetroCSS's compiled CSS precisely so it never needs a Sass toolchain, and
+  # this is what proves that stayed true.
+  HUGO_VERSION: 0.161.1
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: peaceiris/actions-hugo@v3
+        with:
+          hugo-version: ${{ env.HUGO_VERSION }}
+          extended: false
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+
+      - run: npm ci
+
+      - name: Build the demo site, failing on any warning
+        run: |
+          set -o pipefail
+          hugo --source exampleSite --themesDir ../.. --minify --gc 2>&1 | tee build.log
+          if grep -q "^WARN" build.log; then
+            echo "::error::Hugo emitted warnings"
+            grep "^WARN" build.log
+            exit 1
+          fi
+
+      - name: Check the vendored bundle is in sync with its pin
+        run: |
+          node scripts/vendor-retrocss.mjs --npm
+          git diff --exit-code -- assets/retrocss data/retrocss.toml \
+            || (echo "::error::assets/retrocss is stale — run npm run vendor:npm and commit"; exit 1)
+
+      - run: npx playwright install --with-deps chromium
+
+      - name: Rendered-page gate
+        run: npm run build:test && npm run check:pages
+
+      - name: Keyboard-operability gate
+        run: npm run check:keyboard

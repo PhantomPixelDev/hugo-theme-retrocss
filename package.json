@@ -1,0 +1,25 @@
+{
+  "name": "hugo-theme-retrocss",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Windows 95/98 Hugo theme for blogs and documentation, built on RetroCSS.",
+  "license": "MIT",
+  "author": "PhantomPixelDev",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/PhantomPixelDev/hugo-theme-retrocss.git"
+  },
+  "scripts": {
+    "build": "hugo --source exampleSite --themesDir ../.. --minify --gc",
+    "build:test": "hugo --source exampleSite --themesDir ../.. --minify --gc --cleanDestinationDir --baseURL \"/\"",
+    "check": "npm run build:test && npm run check:pages && npm run check:keyboard",
+    "check:keyboard": "node scripts/check-keyboard.mjs",
+    "check:pages": "node scripts/check-pages.mjs",
+    "serve": "hugo server --source exampleSite --themesDir ../.. --disableFastRender",
+    "vendor": "node scripts/vendor-retrocss.mjs",
+    "vendor:npm": "node scripts/vendor-retrocss.mjs --npm"
+  },
+  "devDependencies": {
+    "playwright": "^1.63.0"
+  }
+}

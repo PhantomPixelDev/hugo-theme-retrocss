@@ -1,0 +1,10 @@
+{{- /* {{< rating value="4" max="5" label="Nostalgia" >}} — the framework turns
+       this into an ARIA radiogroup with arrow-key support. */ -}}
+{{- $max := .Get "max" | default "5" | int -}}
+{{- $value := .Get "value" | default "0" | int -}}
+<div class="retro-rating" data-rating="{{ $value }}" data-max="{{ $max }}"
+     {{- with .Get "label" }} aria-label="{{ . }}"{{ end }}>
+  {{- range seq $max }}
+  <span class="retro-rating-star">&#9733;</span>
+  {{- end }}
+</div>

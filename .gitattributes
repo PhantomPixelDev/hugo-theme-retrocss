@@ -1,0 +1,8 @@
+# Normalise to LF in the repository. The vendored bundle is checked for drift in
+# CI with `git diff --exit-code`, and a CRLF checkout on Windows would fail that
+# against a Linux runner's regenerated copy.
+* text=auto eol=lf
+
+*.png binary
+*.ico binary
+*.woff2 binary

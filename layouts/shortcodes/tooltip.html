@@ -1,0 +1,10 @@
+{{- /*
+  {{< tooltip text="Shown on hover and on focus" >}}hover me{{< /tooltip >}}
+
+  The trigger carries the attribute and nothing else: the framework builds the
+  bubble inside it, gives it .retro-tooltip, wires aria-describedby, and adds a
+  tabindex when the trigger is not already focusable. Putting .retro-tooltip on
+  the trigger itself styles it as the bubble — which is `visibility: hidden`,
+  and an element that is not visible cannot take focus.
+*/ -}}
+<span data-retro-tooltip="{{ .Get "text" }}">{{ .Inner | .Page.RenderString }}</span>

@@ -1,0 +1,49 @@
+{{- /* JSON-LD: WebSite (+ SearchAction) on the home page, BlogPosting on
+       articles, BreadcrumbList wherever the page has ancestors. Keys whose
+       value is unknown are omitted rather than emitted as null. */ -}}
+{{- $image := "" -}}
+{{- with .Params.images }}{{ $image = index . 0 | absURL }}{{ end -}}
+{{- if not $image }}{{ with site.Params.images }}{{ $image = index . 0 | absURL }}{{ end }}{{ end -}}
+
+{{- if .IsHome -}}
+  {{- $data := dict
+    "@context" "https://schema.org"
+    "@type" "WebSite"
+    "name" site.Title
+    "url" site.Home.Permalink -}}
+  {{- with site.Params.description }}{{ $data = merge $data (dict "description" (. | plainify)) }}{{ end -}}
+  {{- if site.Params.search | default true -}}
+    {{- $data = merge $data (dict "potentialAction" (dict
+      "@type" "SearchAction"
+      "target" (dict "@type" "EntryPoint" "urlTemplate" (printf "%ssearch/?q={search_term_string}" site.Home.Permalink))
+      "query-input" "required name=search_term_string")) -}}
+  {{- end }}
+<script type="application/ld+json">{{ $data | jsonify (dict "indent" "  ") | safeJS }}</script>
+{{- else if .IsPage -}}
+  {{- $keywords := slice -}}
+  {{- range .GetTerms "tags" }}{{ $keywords = $keywords | append .LinkTitle }}{{ end -}}
+  {{- $data := dict
+    "@context" "https://schema.org"
+    "@type" "BlogPosting"
+    "headline" .Title
+    "url" .Permalink
+    "mainEntityOfPage" (dict "@type" "WebPage" "@id" .Permalink)
+    "wordCount" .WordCount
+    "author" (dict "@type" "Person" "name" (.Params.author | default site.Params.author.name | default site.Title))
+    "publisher" (dict "@type" "Organization" "name" site.Title "url" site.Home.Permalink) -}}
+  {{- if not .Date.IsZero }}{{ $data = merge $data (dict "datePublished" (.Date.Format "2006-01-02T15:04:05Z07:00")) }}{{ end -}}
+  {{- if not .Lastmod.IsZero }}{{ $data = merge $data (dict "dateModified" (.Lastmod.Format "2006-01-02T15:04:05Z07:00")) }}{{ end -}}
+  {{- with .Description | default (.Summary | plainify | truncate 160) }}{{ $data = merge $data (dict "description" .) }}{{ end -}}
+  {{- with $image }}{{ $data = merge $data (dict "image" .) }}{{ end -}}
+  {{- with $keywords }}{{ $data = merge $data (dict "keywords" (delimit . ", ")) }}{{ end }}
+<script type="application/ld+json">{{ $data | jsonify (dict "indent" "  ") | safeJS }}</script>
+{{- end -}}
+
+{{- $crumbs := slice -}}
+{{- range .Ancestors.Reverse -}}
+  {{- $crumbs = $crumbs | append (dict "@type" "ListItem" "position" (add (len $crumbs) 1) "name" (.LinkTitle | default site.Title) "item" .Permalink) -}}
+{{- end -}}
+{{- if gt (len $crumbs) 1 -}}
+  {{- $crumbs = $crumbs | append (dict "@type" "ListItem" "position" (add (len $crumbs) 1) "name" .LinkTitle "item" .Permalink) }}
+<script type="application/ld+json">{{ dict "@context" "https://schema.org" "@type" "BreadcrumbList" "itemListElement" $crumbs | jsonify (dict "indent" "  ") | safeJS }}</script>
+{{- end -}}

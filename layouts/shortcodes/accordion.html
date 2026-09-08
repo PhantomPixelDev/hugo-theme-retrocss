@@ -1,0 +1,23 @@
+{{- /*
+  {{< accordion >}}
+    {{< accordion-item title="What is this?" >}}…{{< /accordion-item >}}
+  {{< /accordion >}}
+*/ -}}
+{{- /* Hugo renders nested shortcodes before their parent, so the children have
+       already registered themselves by the time this runs. .Inner is still
+       referenced (and discarded): Hugo rejects a paired shortcode that never
+       touches it, and resetting the store here would wipe the children. */ -}}
+{{- $_ := .Inner -}}
+{{- $items := .Store.Get "items" -}}
+{{- with $items }}
+<div class="retro-accordion">
+  {{- range . }}
+  <div class="retro-accordion-item">
+    <button class="retro-accordion-toggle" type="button" aria-expanded="false">
+      {{ .title }}<span class="retro-accordion-icon" aria-hidden="true">+</span>
+    </button>
+    <div class="retro-accordion-content">{{ .content }}</div>
+  </div>
+  {{- end }}
+</div>
+{{- end -}}

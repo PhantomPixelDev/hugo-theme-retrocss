@@ -1,0 +1,9 @@
+{{- /* {{< progress value="75" label="Traffic" type="success" >}} */ -}}
+{{- $value := .Get "value" | default "0" | int -}}
+{{- $label := .Get "label" -}}
+<div class="retro-progress retro-my-4" role="progressbar" aria-valuenow="{{ $value }}" aria-valuemin="0" aria-valuemax="100"
+     {{- with $label }} aria-label="{{ . }}"{{ end }}>
+  <div class="retro-progress-bar{{ with .Get "type" }} retro-progress-bar-{{ . }}{{ end }}{{ if .Get "striped" }} retro-progress-bar-striped{{ end }}"
+       style="width: {{ $value }}%;"></div>
+  {{- with $label }}<span class="retro-progress-label">{{ . }}: {{ $value }}%</span>{{ end }}
+</div>

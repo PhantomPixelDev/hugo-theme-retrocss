@@ -1,0 +1,21 @@
+{{ define "main" }}
+  {{- partial "breadcrumbs.html" . }}
+  <h1>{{ .Title }}</h1>
+  {{- with .Description }}<p class="retro-text-lg retro-text-secondary retro-mb-4">{{ . | markdownify }}</p>{{ end }}
+  {{- with .Content }}<div class="retro-prose retro-mb-5">{{ . }}</div>{{ end }}
+
+  {{- $pages := .RegularPagesRecursive -}}
+  {{- if $pages }}
+  {{- $paginator := .Paginate $pages }}
+  <div class="post-grid retro-mb-5">
+    {{- range $paginator.Pages }}
+    {{- partial "post-card.html" . }}
+    {{- end }}
+  </div>
+  {{- partial "pagination.html" . }}
+  {{- else }}
+  <div class="retro-alert retro-alert-info">
+    <div class="retro-alert-body">{{ i18n "noPosts" | default "Nothing here yet." }}</div>
+  </div>
+  {{- end }}
+{{ end }}

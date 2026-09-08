@@ -1,0 +1,10 @@
+{{- $crumbs := .Ancestors.Reverse -}}
+{{- if gt (len $crumbs) 1 }}
+<nav class="retro-breadcrumbs" aria-label="{{ i18n "breadcrumb" | default "Breadcrumb" }}">
+  {{- range $crumbs }}
+  <a class="retro-breadcrumb" href="{{ .RelPermalink }}">{{ .LinkTitle | default site.Title }}</a>
+  <span class="retro-breadcrumb-sep" aria-hidden="true">&rsaquo;</span>
+  {{- end }}
+  <span class="retro-breadcrumb" aria-current="page">{{ .LinkTitle }}</span>
+</nav>
+{{- end -}}

@@ -1,0 +1,11 @@
+{{- with site.Taxonomies.tags }}
+<div class="sidebar-widget">
+  <div class="retro-sidebar-group">{{ i18n "tags" | default "Tags" }}</div>
+  <div class="tag-cloud">
+    {{- range first 14 .ByCount }}
+    <a class="retro-badge {{ partial "func/hue-class.html" (dict "term" .Page.LinkTitle "prefix" "retro-badge") }}"
+       href="{{ .Page.RelPermalink }}">{{ .Page.LinkTitle }} ({{ .Count }})</a>
+    {{- end }}
+  </div>
+</div>
+{{- end -}}

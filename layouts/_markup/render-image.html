@@ -1,0 +1,20 @@
+{{- /* Images are lazy and dimensioned where Hugo can measure them, so a long
+       article does not reflow as it decodes. A title becomes a caption. */ -}}
+{{- $src := .Destination -}}
+{{- $res := "" -}}
+{{- if not (urls.Parse .Destination).IsAbs -}}
+  {{- with .Page.Resources.GetMatch .Destination }}{{ $res = . }}{{ else }}
+    {{- with resources.Get .Destination }}{{ $res = . }}{{ end -}}
+  {{- end -}}
+{{- end -}}
+{{- with $res }}{{ $src = .RelPermalink }}{{ end -}}
+{{- $img := printf `<img src="%s" alt="%s"%s loading="lazy" decoding="async">`
+      $src
+      (.PlainText | plainify)
+      (cond (and $res (in (slice "image/png" "image/jpeg" "image/webp" "image/gif") (string (or $res.MediaType.Type "")))) (printf ` width="%d" height="%d"` $res.Width $res.Height) "")
+-}}
+{{- if .Title -}}
+<figure>{{ $img | safeHTML }}<figcaption>{{ .Title | markdownify }}</figcaption></figure>
+{{- else -}}
+{{ $img | safeHTML }}
+{{- end -}}

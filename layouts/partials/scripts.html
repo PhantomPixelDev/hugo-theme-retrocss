@@ -1,0 +1,5 @@
+{{- with resources.Get "retrocss/retro.min.js" -}}
+  {{- $js := . -}}
+  {{- if hugo.IsProduction }}{{ $js = $js | fingerprint "sha384" }}{{ end -}}
+  <script src="{{ $js.RelPermalink }}"{{ if hugo.IsProduction }} integrity="{{ $js.Data.Integrity }}"{{ end }} defer></script>
+{{- end -}}

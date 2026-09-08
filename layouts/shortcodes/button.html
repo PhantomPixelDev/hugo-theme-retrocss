@@ -1,0 +1,9 @@
+{{- /* {{< button href="/docs/" type="primary" size="sm" >}}Read the docs{{< /button >}} */ -}}
+{{- $class := printf "retro-btn%s%s"
+      (cond (ne (.Get "type") nil) (printf " retro-btn-%s" (.Get "type")) "")
+      (cond (ne (.Get "size") nil) (printf " retro-btn-%s" (.Get "size")) "") -}}
+{{- with .Get "href" -}}
+<a class="{{ $class }}" href="{{ . | relURL }}">{{ $.Inner | $.Page.RenderString }}</a>
+{{- else -}}
+<button class="{{ $class }}" type="button">{{ .Inner | .Page.RenderString }}</button>
+{{- end -}}

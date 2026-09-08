@@ -1,0 +1,6 @@
+{{- $title := .Get "title" | default (printf "Tab %d" (add .Ordinal 1)) -}}
+{{- with .Parent -}}
+  {{- .Store.Add "tabs" (slice (dict "title" $title "content" ($.Inner | $.Page.RenderString (dict "display" "block")))) -}}
+{{- else -}}
+  {{- errorf "the tab shortcode must be used inside tabs (%s)" .Position -}}
+{{- end -}}

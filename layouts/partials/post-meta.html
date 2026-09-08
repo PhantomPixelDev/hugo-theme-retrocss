@@ -1,0 +1,18 @@
+{{- $author := .Params.author | default site.Params.author.name -}}
+<div class="post-meta">
+  {{- if and $author (site.Params.showAuthor | default true) }}
+  <span class="retro-avatar retro-avatar-sm retro-bg-primary" aria-hidden="true">
+    {{- $initials := .Params.authorInitials | default site.Params.author.initials -}}
+    {{- if not $initials }}{{ range first 2 (split $author " ") }}{{ substr . 0 1 }}{{ end }}{{ else }}{{ $initials }}{{ end -}}
+  </span>
+  <span>{{ $author }}</span>
+  <span aria-hidden="true">&middot;</span>
+  {{- end }}
+  {{- if not .Date.IsZero }}
+  <time datetime="{{ .Date.Format "2006-01-02" }}">{{ .Date.Format (site.Params.dateFormat | default "2 January 2006") }}</time>
+  {{- end }}
+  {{- if site.Params.showReadingTime | default true }}
+  <span aria-hidden="true">&middot;</span>
+  <span>{{ .ReadingTime }} {{ i18n "minRead" | default "min read" }}</span>
+  {{- end }}
+</div>

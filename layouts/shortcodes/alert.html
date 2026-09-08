@@ -1,0 +1,6 @@
+{{- /* {{< alert type="warning" title="Careful" >}}body{{< /alert >}} */ -}}
+{{- $type := .Get "type" | default "info" -}}
+<div class="retro-alert retro-alert-{{ $type }}">
+  {{- with .Get "title" }}<div class="retro-alert-header">{{ . }}</div>{{ end }}
+  <div class="retro-alert-body">{{ .Inner | .Page.RenderString (dict "display" "block") }}</div>
+</div>

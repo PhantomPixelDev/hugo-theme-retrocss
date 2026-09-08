@@ -1,0 +1,16 @@
+{{- /*
+  Highlights the block with Chroma, then tags the <pre> with .retro-code.
+
+  That one class is what earns the Win9x chrome — the title bar drawn by the
+  framework's ::before/::after — and it is also the selector code-copy.js scans
+  for, so the copy button appears without any wiring here.
+*/ -}}
+{{- /* noClasses is forced: the palette has to come from CSS variables for the
+       dark theme to reach it, and Hugo does not merge a theme's markup config
+       into the site's, so it cannot be a default the site could forget. */ -}}
+{{- $opts := merge .Options (dict "noClasses" false) -}}
+{{- $html := transform.Highlight (strings.TrimRight "\n" .Inner) .Type $opts -}}
+{{- $html = replaceRE `(<pre[^>]*?)class="chroma"` `${1}class="chroma retro-code"` (string $html) 1 -}}
+{{- with .Attributes.title }}<figure class="code-figure"><figcaption>{{ . }}</figcaption>{{ end -}}
+{{- $html | safeHTML -}}
+{{- with .Attributes.title }}</figure>{{ end -}}

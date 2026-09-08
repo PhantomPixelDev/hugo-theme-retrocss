@@ -1,0 +1,8 @@
+{{- if and (site.Params.showToc | default true) (ne .Params.toc false) .TableOfContents -}}
+  {{- $toc := .TableOfContents | safeHTML -}}
+  {{- if gt (len (findRE "<li" (string $toc))) 1 }}
+<nav class="retro-nav-vertical retro-w-full sidebar-widget" aria-label="{{ i18n "articleContents" | default "Article contents" }}">
+  <div class="retro-sidebar-section">{{ $toc }}</div>
+</nav>
+  {{- end -}}
+{{- end -}}

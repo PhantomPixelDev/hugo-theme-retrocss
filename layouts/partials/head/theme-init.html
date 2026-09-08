@@ -1,0 +1,14 @@
+{{- /*
+  Applies a stored theme choice before the first paint.
+
+  The stylesheet already follows prefers-color-scheme on its own, so this covers
+  only the case CSS cannot see: a visitor whose stored choice differs from their
+  OS setting. It must stay inline and first in <head> — an external or deferred
+  script runs after the first paint, which is the whole problem.
+*/ -}}
+<script>
+  try {
+    var retroTheme = localStorage.getItem('retro-theme');
+    if (retroTheme) document.documentElement.setAttribute('data-theme', retroTheme);
+  } catch (e) { /* storage blocked; prefers-color-scheme still applies */ }
+</script>

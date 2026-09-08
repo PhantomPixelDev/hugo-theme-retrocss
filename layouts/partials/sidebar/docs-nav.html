@@ -1,0 +1,15 @@
+{{- $root := site.GetPage (printf "/%s" (site.Params.docsSection | default "docs")) -}}
+{{- with $root }}
+<div class="retro-sidebar-header">{{ .LinkTitle }}</div>
+<nav class="retro-nav-vertical retro-w-full sidebar-widget" aria-label="{{ i18n "docsNav" | default "Documentation" }}">
+  <div class="retro-sidebar-section">
+    {{- partial "sidebar/docs-tree.html" (dict "page" . "current" $) }}
+  </div>
+</nav>
+{{- end }}
+{{- if and .IsPage (site.Params.showToc | default true) }}
+<div class="sidebar-widget">
+  <div class="retro-sidebar-group">{{ i18n "onThisPage" | default "On this page" }}</div>
+  {{- partial "sidebar/toc.html" . }}
+</div>
+{{- end -}}

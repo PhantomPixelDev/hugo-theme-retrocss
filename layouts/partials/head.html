@@ -1,0 +1,73 @@
+{{- $title := .Title | default site.Title -}}
+{{- $isHome := .IsHome -}}
+{{- $pageTitle := cond $isHome site.Title (printf "%s — %s" $title site.Title) -}}
+{{- $description := .Description | default (.Summary | plainify | truncate 160) | default site.Params.description | default site.Params.Description -}}
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>{{ $pageTitle }}</title>
+{{- with $description }}
+<meta name="description" content="{{ . | plainify | chomp }}">
+{{- end }}
+{{- with .Params.canonical | default .Permalink }}
+<link rel="canonical" href="{{ . }}">
+{{- end }}
+{{- if or .Params.private .Params.noindex (and .Draft hugo.IsProduction) }}
+<meta name="robots" content="noindex, nofollow">
+{{- end }}
+{{- with site.Params.author.name }}
+<meta name="author" content="{{ . }}">
+{{- end }}
+
+{{/* --- Open Graph / Twitter ------------------------------------------- */}}
+{{- $image := "" -}}
+{{- with .Params.images }}{{ $image = index . 0 | absURL }}{{ end -}}
+{{- if not $image }}{{ with .Resources.GetMatch "{cover,feature,thumbnail}.*" }}{{ $image = .Permalink }}{{ end }}{{ end -}}
+{{- if not $image }}{{ with .Params.cover }}{{ $image = . | absURL }}{{ end }}{{ end -}}
+{{- if not $image }}{{ with site.Params.images }}{{ $image = index . 0 | absURL }}{{ end }}{{ end -}}
+<meta property="og:type" content="{{ cond .IsPage "article" "website" }}">
+<meta property="og:site_name" content="{{ site.Title }}">
+<meta property="og:url" content="{{ .Permalink }}">
+<meta property="og:title" content="{{ $title }}">
+{{- with $description }}
+<meta property="og:description" content="{{ . | plainify | chomp }}">
+{{- end }}
+{{- with $image }}
+<meta property="og:image" content="{{ . }}">
+<meta name="twitter:image" content="{{ . }}">
+{{- end }}
+<meta name="twitter:card" content="{{ cond (ne $image "") "summary_large_image" "summary" }}">
+{{- with site.Params.twitterSite }}
+<meta name="twitter:site" content="{{ . }}">
+{{- end }}
+{{- if .IsPage }}
+{{- with .Date }}<meta property="article:published_time" content="{{ .Format "2006-01-02T15:04:05Z07:00" }}">{{ end }}
+{{- with .Lastmod }}<meta property="article:modified_time" content="{{ .Format "2006-01-02T15:04:05Z07:00" }}">{{ end }}
+{{- range .GetTerms "tags" }}<meta property="article:tag" content="{{ .LinkTitle }}">{{ end }}
+{{- end }}
+
+{{/* --- Feeds and icons ------------------------------------------------- */}}
+{{- range .AlternativeOutputFormats -}}
+{{- if eq .Name "rss" }}
+<link rel="alternate" type="{{ .MediaType.Type }}" href="{{ .Permalink }}" title="{{ site.Title }}">
+{{- end -}}
+{{- end }}
+{{- with resources.Get "favicon.ico" | default (resources.Get "images/favicon.ico") }}
+<link rel="icon" href="{{ .RelPermalink }}">
+{{- end }}
+
+{{/* --- Styles ----------------------------------------------------------
+     One concatenated, fingerprinted bundle: the vendored framework, the
+     syntax-highlighting map, this theme's ~80 lines of layout glue, and the
+     site's own assets/css/custom.css when it exists. Concat, minify and
+     fingerprint all work in Hugo's standard build — only Sass needs extended.
+*/}}
+{{- $parts := slice -}}
+{{- with resources.Get "retrocss/retro.min.css" }}{{ $parts = $parts | append . }}{{ end -}}
+{{- with resources.Get "css/chroma-retro.css" }}{{ $parts = $parts | append . }}{{ end -}}
+{{- with resources.Get "css/theme.css" }}{{ $parts = $parts | append . }}{{ end -}}
+{{- with resources.Get "css/custom.css" }}{{ $parts = $parts | append . }}{{ end -}}
+{{- $css := $parts | resources.Concat "css/site.css" -}}
+{{- if hugo.IsProduction }}{{ $css = $css | minify | fingerprint "sha384" }}{{ end -}}
+<link rel="stylesheet" href="{{ $css.RelPermalink }}"{{ if hugo.IsProduction }} integrity="{{ $css.Data.Integrity }}"{{ end }}>
+{{- partial "head/tokens.html" . -}}
+{{- partial "head/schema.html" . -}}

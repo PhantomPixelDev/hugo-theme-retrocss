@@ -1,0 +1,12 @@
+{{- $posts := partial "func/posts.html" . -}}
+{{- $months := $posts.GroupByDate "January 2006" -}}
+{{- with first 6 $months }}
+<div class="sidebar-widget">
+  <div class="retro-sidebar-group">{{ i18n "archive" | default "Archive" }}</div>
+  <ul class="retro-list retro-list-striped">
+    {{- range . }}
+    <li>{{ .Key }} <span class="retro-badge retro-badge-sm">{{ len .Pages }}</span></li>
+    {{- end }}
+  </ul>
+</div>
+{{- end -}}

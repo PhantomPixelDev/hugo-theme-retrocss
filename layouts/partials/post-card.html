@@ -1,0 +1,19 @@
+{{- $cover := partial "func/cover.html" . -}}
+<article class="retro-card retro-shadow-sm">
+  {{- with $cover }}
+  <img class="post-cover" src="{{ . }}" alt="" loading="lazy" decoding="async">
+  {{- end }}
+  <div class="retro-card-content">
+    {{- with (.GetTerms "categories") }}
+    {{- $term := index . 0 }}
+    <a class="retro-badge {{ partial "func/hue-class.html" (dict "term" $term.LinkTitle "prefix" "retro-badge") }} retro-mb-2"
+       href="{{ $term.RelPermalink }}">{{ $term.LinkTitle }}</a>
+    {{- end }}
+    <h3 class="post-title"><a href="{{ .RelPermalink }}">{{ .LinkTitle }}</a></h3>
+    {{- partial "post-meta.html" . }}
+    <p class="post-excerpt">{{ .Description | default (.Summary | plainify | truncate 180) }}</p>
+    <a class="retro-btn retro-btn-sm" href="{{ .RelPermalink }}">
+      {{ i18n "readMore" | default "Read more" }}<span class="retro-sr-only">: {{ .LinkTitle }}</span>
+    </a>
+  </div>
+</article>

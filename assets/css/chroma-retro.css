@@ -1,0 +1,63 @@
+/*
+ * Chroma → RetroCSS syntax tokens.
+ *
+ * RetroCSS already ships an eleven-token syntax palette that is redefined for
+ * dark mode and checked for AA contrast against the code surface upstream.
+ * This file only maps Hugo's Chroma classes onto those tokens, so highlighted
+ * code inherits the framework's guarantees instead of introducing a second,
+ * unchecked palette.
+ */
+
+/* The framework paints the code chassis. Chroma must not paint over it. */
+.chroma { background: transparent; color: inherit; }
+.chroma code { background: transparent; }
+
+/* Keywords */
+.chroma .k, .chroma .kc, .chroma .kd, .chroma .kn, .chroma .kp, .chroma .kr, .chroma .kt {
+  color: var(--retro-syntax-keyword);
+  font-weight: var(--retro-font-weight-bold);
+}
+/* Strings */
+.chroma .s, .chroma .sa, .chroma .sb, .chroma .sc, .chroma .dl, .chroma .sd,
+.chroma .s2, .chroma .se, .chroma .sh, .chroma .si, .chroma .sx, .chroma .sr,
+.chroma .s1, .chroma .ss { color: var(--retro-syntax-string); }
+/* Comments */
+.chroma .c, .chroma .ch, .chroma .cm, .chroma .cp, .chroma .cpf, .chroma .c1, .chroma .cs {
+  color: var(--retro-syntax-comment);
+  font-style: italic;
+}
+/* Functions and builtins */
+.chroma .nf, .chroma .fm, .chroma .nb, .chroma .bp { color: var(--retro-syntax-function); }
+/* Numbers and constants */
+.chroma .m, .chroma .mb, .chroma .mf, .chroma .mh, .chroma .mi, .chroma .il,
+.chroma .mo, .chroma .no { color: var(--retro-syntax-number); }
+/* Operators and punctuation-as-operator */
+.chroma .o, .chroma .ow { color: var(--retro-syntax-operator); }
+/* Variables */
+.chroma .nv, .chroma .vc, .chroma .vg, .chroma .vi, .chroma .vm { color: var(--retro-syntax-variable); }
+/* Classes, namespaces, exceptions */
+.chroma .nc, .chroma .ne, .chroma .nn { color: var(--retro-syntax-class); }
+/* Attributes, properties, decorators */
+.chroma .na, .chroma .py, .chroma .nd, .chroma .nl { color: var(--retro-syntax-attribute); }
+/* Tags */
+.chroma .nt { color: var(--retro-syntax-tag); }
+/* Generic / diff output */
+.chroma .gh, .chroma .gu { color: var(--retro-syntax-class); font-weight: var(--retro-font-weight-bold); }
+.chroma .gd { color: var(--retro-danger-text); }
+.chroma .gi { color: var(--retro-success-text); }
+.chroma .ge { font-style: italic; }
+.chroma .gs { font-weight: var(--retro-font-weight-bold); }
+.chroma .err { color: var(--retro-danger-text); }
+
+/* Line numbers: present but recessive, and never selectable with the code. */
+.chroma .ln, .chroma .lnt {
+  color: var(--retro-text-muted);
+  -webkit-user-select: none;
+  user-select: none;
+}
+.chroma .lntable { display: block; width: 100%; border-spacing: 0; }
+.chroma .lntable td { padding: 0; vertical-align: top; }
+.chroma .lntd:first-child { width: 1%; padding-inline-end: var(--retro-spacing-sm); }
+/* A highlighted line marks itself with the same low-alpha tint the framework
+   uses for callouts, so it survives both themes. */
+.chroma .hl { background: rgba(var(--retro-warning-rgb), 0.18); }

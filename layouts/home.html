@@ -1,0 +1,31 @@
+{{ define "main" }}
+  <h1>{{ site.Title }}</h1>
+  {{- with site.Params.description }}
+  <p class="retro-text-lg retro-text-secondary retro-mb-4">{{ . | markdownify }}</p>
+  {{- end }}
+  {{- with .Content }}<div class="retro-prose retro-mb-5">{{ . }}</div>{{ end }}
+
+  {{- $posts := partial "func/posts.html" . -}}
+  {{- $featured := where $posts "Params.featured" true -}}
+  {{- $lead := cond (gt (len $featured) 0) (index $featured 0) (cond (gt (len $posts) 0) (index $posts 0) nil) -}}
+  {{- $rest := $posts -}}
+  {{- with $lead }}
+    {{- partial "post-featured.html" . }}
+    {{- $rest = where $posts "Permalink" "!=" .Permalink }}
+  {{- end }}
+
+  {{- if $rest }}
+  <h2 id="latest">{{ i18n "latestPosts" | default "Latest posts" }}</h2>
+  {{- $paginator := .Paginate $rest }}
+  <div class="post-grid retro-mb-5">
+    {{- range $paginator.Pages }}
+    {{- partial "post-card.html" . }}
+    {{- end }}
+  </div>
+  {{- partial "pagination.html" . }}
+  {{- else }}
+  <div class="retro-alert retro-alert-info">
+    <div class="retro-alert-body">{{ i18n "noPosts" | default "No posts yet." }}</div>
+  </div>
+  {{- end }}
+{{ end }}

@@ -1,0 +1,3 @@
+{{- /* {{< badge type="success" >}}Shipped{{< /badge >}} */ -}}
+{{- $type := .Get "type" | default "" -}}
+<span class="retro-badge{{ with $type }} retro-badge-{{ . }}{{ end }}">{{ .Inner | .Page.RenderString }}</span>

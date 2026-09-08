@@ -1,0 +1,19 @@
+{{- /*
+  One sidebar, three shapes: docs get a section tree, a single post gets its own
+  table of contents, and everything else gets site-wide widgets. Rendered into a
+  variable by baseof, so returning nothing collapses the column.
+*/ -}}
+{{- $docs := and .Section (eq .Section (site.Params.docsSection | default "docs")) -}}
+{{- if $docs -}}
+  {{- partial "sidebar/docs-nav.html" . -}}
+{{- else if and .IsPage (ne .Layout "search") -}}
+  <div class="retro-sidebar-header">{{ i18n "onThisPage" | default "On this page" }}</div>
+  {{- partial "sidebar/toc.html" . -}}
+  {{- partial "sidebar/terms.html" . -}}
+  <a class="retro-btn retro-w-full" href="{{ (site.GetPage (printf "/%s" .Section)).RelPermalink | default site.Home.RelPermalink }}">&laquo; {{ i18n "allPosts" | default "All posts" }}</a>
+{{- else -}}
+  <div class="retro-sidebar-header">{{ site.Title }}</div>
+  {{- partial "sidebar/sections.html" . -}}
+  {{- partial "sidebar/archive.html" . -}}
+  {{- partial "sidebar/tag-cloud.html" . -}}
+{{- end -}}

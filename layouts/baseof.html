@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="{{ or site.Language.Locale site.Language.Lang }}"{{ with site.Language.Direction }} dir="{{ . }}"{{ end }}>
+<head>
+  {{- partial "head/theme-init.html" . -}}
+  {{- partial "head.html" . -}}
+  {{- block "head" . }}{{ end -}}
+</head>
+<body class="retro-body-bg">
+  {{- partial "skip-link.html" . -}}
+  {{- partial "nav.html" . -}}
+  <hr class="retro-mt-5 retro-border-muted">
+
+  {{/* Rendered up front so an empty sidebar collapses the column entirely,
+       rather than leaving a 250px gutter of nothing. */}}
+  {{- $sidebar := partial "sidebar.html" . -}}
+  {{- $position := site.Params.sidebar | default "left" -}}
+  {{- $hasSidebar := and (ne $position "off") (ne (trim $sidebar " \n\r\t") "") -}}
+  {{/* The framework's border helpers are physical, so the rule that separates
+       the sidebar from the content is picked per direction — otherwise an RTL
+       site draws it down the outside edge. */}}
+  {{- $rtl := eq (string site.Language.Direction) "rtl" -}}
+  {{- $leading := cond $rtl "retro-border-left" "retro-border-right" -}}
+  {{- $trailing := cond $rtl "retro-border-right" "retro-border-left" -}}
+
+  <div class="retro-main-layout retro-gap-4">
+    {{- if and $hasSidebar (ne $position "right") }}
+    <aside class="retro-sidebar retro-bg-light {{ $leading }} retro-shadow-lg">{{ $sidebar }}</aside>
+    {{- end }}
+
+    <main id="main" class="main-content retro-pb-8">
+      {{- block "main" . }}{{ end }}
+      {{- partial "footer.html" . }}
+    </main>
+
+    {{- if and $hasSidebar (eq $position "right") }}
+    <aside class="retro-sidebar retro-bg-light {{ $trailing }} retro-shadow-lg">{{ $sidebar }}</aside>
+    {{- end }}
+  </div>
+
+  {{- partial "scripts.html" . -}}
+  {{- block "scripts" . }}{{ end -}}
+</body>
+</html>

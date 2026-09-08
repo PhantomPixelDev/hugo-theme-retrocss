@@ -1,0 +1,23 @@
+{{ define "main" }}
+  {{- partial "breadcrumbs.html" . }}
+  <h1>{{ .Title }}</h1>
+  {{- with .Description }}<p class="retro-text-lg retro-text-muted retro-mb-4">{{ . | markdownify }}</p>{{ end }}
+  {{- with .Content }}<div class="retro-prose retro-mb-5">{{ . }}</div>{{ end }}
+
+  {{- $children := union .Sections .RegularPages }}
+  {{- with $children.ByWeight }}
+  <div class="post-grid retro-mb-5">
+    {{- range . }}
+    <article class="retro-card retro-shadow-sm">
+      <div class="retro-card-content">
+        <h2 class="post-title"><a href="{{ .RelPermalink }}">{{ .LinkTitle }}</a></h2>
+        <p class="post-excerpt">{{ .Description | default (.Summary | plainify | truncate 160) }}</p>
+        <a class="retro-btn retro-btn-sm" href="{{ .RelPermalink }}">
+          {{ i18n "readMore" | default "Read more" }}<span class="retro-sr-only">: {{ .LinkTitle }}</span>
+        </a>
+      </div>
+    </article>
+    {{- end }}
+  </div>
+  {{- end }}
+{{ end }}

@@ -1,0 +1,15 @@
+{{ define "main" }}
+  {{- partial "breadcrumbs.html" . }}
+  <h1>{{ .Title }}</h1>
+  <p class="retro-text-secondary retro-mb-4">
+    {{ len .Pages }} {{ cond (eq (len .Pages) 1) (i18n "postSingular" | default "post") (i18n "postPlural" | default "posts") }}
+  </p>
+  {{- with .Content }}<div class="retro-prose retro-mb-4">{{ . }}</div>{{ end }}
+  {{- $paginator := .Paginate .Pages }}
+  <div class="post-grid retro-mb-5">
+    {{- range $paginator.Pages }}
+    {{- partial "post-card.html" . }}
+    {{- end }}
+  </div>
+  {{- partial "pagination.html" . }}
+{{ end }}

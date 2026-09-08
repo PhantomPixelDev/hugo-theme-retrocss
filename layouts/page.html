@@ -1,0 +1,39 @@
+{{ define "main" }}
+  {{- partial "breadcrumbs.html" . }}
+  {{- $cover := partial "func/cover.html" . }}
+  <article class="retro-card retro-mb-5">
+    {{- with (.GetTerms "categories") }}
+    <div class="retro-card-header">{{ (index . 0).LinkTitle }}</div>
+    {{- else }}
+    <div class="retro-card-header">{{ with .Parent }}{{ .LinkTitle }}{{ else }}{{ site.Title }}{{ end }}</div>
+    {{- end }}
+    <div class="retro-card-content">
+      {{- with $cover }}
+      <img class="article-hero" src="{{ . }}" alt="" loading="eager" decoding="async">
+      {{- end }}
+      <div class="article-body">
+        <h1 class="retro-mt-4">{{ .Title }}</h1>
+        {{- partial "post-meta.html" . }}
+        {{- with .Description }}
+        <p class="article-lede">{{ . | markdownify }}</p>
+        {{- end }}
+        <div class="retro-prose">
+          {{ .Content }}
+        </div>
+        {{- with .GetTerms "tags" }}
+        <div class="retro-flex retro-flex-wrap retro-gap-1 retro-mt-5">
+          {{- range . }}
+          <a class="retro-badge {{ partial "func/hue-class.html" (dict "term" .LinkTitle "prefix" "retro-badge") }}"
+             href="{{ .RelPermalink }}">{{ .LinkTitle }}</a>
+          {{- end }}
+        </div>
+        {{- end }}
+      </div>
+    </div>
+  </article>
+
+  {{- partial "prev-next.html" . }}
+  {{- partial "author-card.html" . }}
+  {{- partial "related.html" . }}
+  {{- partial "comments.html" . }}
+{{ end }}

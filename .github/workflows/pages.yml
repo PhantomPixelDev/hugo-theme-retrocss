@@ -1,0 +1,54 @@
+name: Deploy demo site
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# One deploy at a time; queued runs are superseded rather than cancelled, so a
+# push never leaves the site half-published.
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+env:
+  HUGO_VERSION: 0.161.1
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: peaceiris/actions-hugo@v3
+        with:
+          hugo-version: ${{ env.HUGO_VERSION }}
+          extended: false
+
+      - id: pages
+        uses: actions/configure-pages@v5
+
+      - name: Build
+        run: |
+          hugo --source exampleSite --themesDir ../.. \
+               --minify --gc --cleanDestinationDir \
+               --baseURL "${{ steps.pages.outputs.base_url }}/"
+
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: exampleSite/public
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4

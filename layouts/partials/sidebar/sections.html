@@ -1,0 +1,18 @@
+{{- $sections := where site.Sections "Params.hidden" "!=" true -}}
+{{- with $sections }}
+<nav class="retro-nav-vertical retro-w-full sidebar-widget" aria-label="{{ i18n "sections" | default "Sections" }}">
+  <div class="retro-sidebar-section">
+    <div class="retro-sidebar-group">{{ i18n "sections" | default "Sections" }}</div>
+    <ul>
+      {{- range . }}
+      <li>
+        <a class="retro-nav-item" href="{{ .RelPermalink }}"{{ if $.IsAncestor . }} aria-current="page"{{ end }}>
+          {{ .LinkTitle }}
+          <span class="retro-badge retro-badge-sm">{{ len .RegularPagesRecursive }}</span>
+        </a>
+      </li>
+      {{- end }}
+    </ul>
+  </div>
+</nav>
+{{- end -}}

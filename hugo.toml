@@ -1,0 +1,69 @@
+# Theme-level defaults. Hugo merges a theme's `params` and `taxonomies` into
+# the site config, with the site always winning — so everything here is an
+# overridable default.
+#
+# `markup` and `outputs` are deliberately absent: Hugo does NOT merge those from
+# a theme, so declaring them here would look like configuration and do nothing.
+# The two the theme actually needs are documented in README.md and set in
+# exampleSite/hugo.toml:
+#
+#   [markup.goldmark.renderer] unsafe = true
+#   capitalizeListTitles = false
+#
+# Class-based syntax highlighting is not left to config either — the codeblock
+# render hook forces it, because the palette has to come from CSS variables for
+# dark mode to reach it.
+
+[taxonomies]
+  category = "categories"
+  tag = "tags"
+
+[params]
+  # --- chrome -------------------------------------------------------------
+  # Any RetroCSS hue: primary success danger warning info teal tan pink lime
+  # cyan orange brown violet gray maroon gold navy olive silver
+  accentHue = "primary"
+  # One token rounds the whole framework. "0" keeps Win9x squares.
+  borderRadius = "0"
+  # Headings use the body stack unless this is set, e.g.
+  # fontHeading = "'Segoe UI', Tahoma, sans-serif"
+  fontHeading = ""
+  # left | right | off
+  sidebar = "left"
+
+  # --- content ------------------------------------------------------------
+  dateFormat = "2 January 2006"
+  showReadingTime = true
+  showToc = true
+  showAuthor = true
+  paginateGrid = true
+  relatedPosts = 3
+
+  # --- features -----------------------------------------------------------
+  search = true
+  rssInSidebar = true
+
+  # --- SEO ----------------------------------------------------------------
+  description = ""
+  images = []
+  twitterSite = ""
+
+  [params.author]
+    name = ""
+    initials = ""
+    bio = ""
+
+  # none | giscus | utterances
+  [params.comments]
+    provider = "none"
+    [params.comments.giscus]
+      repo = ""
+      repoId = ""
+      category = "Announcements"
+      categoryId = ""
+      mapping = "pathname"
+      theme = "preferred_color_scheme"
+    [params.comments.utterances]
+      repo = ""
+      issueTerm = "pathname"
+      label = "comments"
